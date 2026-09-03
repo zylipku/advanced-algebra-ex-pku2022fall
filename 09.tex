@@ -1,0 +1,349 @@
+\section{习题课 \#9（11月8日）}
+
+\subsection{线性映射的核、像与矩阵表示}
+
+设 $V_1,V_2$ 是域 $\F$ 上的向量空间。映射 $T:V_1\to V_2$ 称为线性映射，如果
+\begin{equation}
+ T(au+bv)=aT(u)+bT(v),
+ \qquad a,b\in\F,
+ \quad u,v\in V_1.
+\end{equation}
+其核与像分别为
+\begin{equation}
+ \Ker T=\set{v\in V_1:T(v)=0},
+ \qquad
+ \Image T=\set{T(v):v\in V_1}.
+\end{equation}
+$T$ 单射当且仅当 $\Ker T=\{0\}$，满射当且仅当 $\Image T=V_2$。
+
+固定 $V_1,V_2$ 的基后，线性映射由一个矩阵表示。若更换定义域与值域的基，表示矩阵在左右分别乘以可逆矩阵，因此同一线性映射的不同矩阵表示彼此等价。
+
+\begin{example}
+令
+\begin{equation}
+ A=\begin{pmatrix}
+ 3&1&4&7\\
+ -1&1&0&3
+ \end{pmatrix}.
+\end{equation}
+前两列线性无关，后两列可由它们表示，所以
+\begin{equation}
+ \Image A
+ =\Span\left\{
+ \begin{pmatrix}3\\-1\end{pmatrix},
+ \begin{pmatrix}1\\1\end{pmatrix}
+ \right\},
+ \qquad
+ \rank A=2.
+\end{equation}
+由 $\dim\Ker A=4-2=2$，消元可得
+\begin{equation}
+ \Ker A=\Span\left\{
+ \begin{pmatrix}-1\\-1\\1\\0\end{pmatrix},
+ \begin{pmatrix}-1\\-4\\0\\1\end{pmatrix}
+ \right\}.
+\end{equation}
+\end{example}
+
+\subsection{矩阵方程 AXB=C}
+
+先考虑可逆情形。若 $A,B$ 都可逆，则
+\begin{equation}
+ AXB=C
+ \quad\Longleftrightarrow\quad
+ X=A^{-1}CB^{-1}.
+\end{equation}
+一般情形可使用广义逆统一描述。
+
+\begin{definition}
+矩阵 $A^{-}$ 称为 $A$ 的一个内逆，如果
+\begin{equation}
+ AA^{-}A=A.
+\end{equation}
+每个有限维矩阵都存在内逆。事实上，若
+\begin{equation}
+ A=P\begin{pmatrix}I_r&0\\0&0\end{pmatrix}Q
+\end{equation}
+是秩标准形，则可取
+\begin{equation}
+ A^{-}=Q^{-1}
+ \begin{pmatrix}I_r&0\\0&0\end{pmatrix}
+ P^{-1},
+\end{equation}
+其中零块按尺寸补齐。
+\end{definition}
+
+\begin{theorem}[矩阵方程的相容条件与通解]
+设
+\begin{equation}
+ A\in\F^{m\times n},
+ \quad X\in\F^{n\times p},
+ \quad B\in\F^{p\times q},
+ \quad C\in\F^{m\times q},
+\end{equation}
+并任选内逆 $A^{-},B^{-}$。方程
+\begin{equation}
+ AXB=C
+\end{equation}
+有解当且仅当
+\begin{equation}
+ AA^{-}CB^{-}B=C.
+\end{equation}
+相容时，全部解为
+\begin{equation}
+ X=A^{-}CB^{-}+Y-A^{-}AYBB^{-},
+ \qquad Y\in\F^{n\times p}\text{ 任意}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+若 $AXB=C$，则
+\begin{equation}
+ AA^{-}CB^{-}B
+ =AA^{-}AXBB^{-}B
+ =AXB=C.
+\end{equation}
+反之，相容条件成立时，取 $X_0=A^{-}CB^{-}$ 即有 $AX_0B=C$。
+
+对任意 $Y$，代入通解表达式得
+\begin{align}
+ AXB
+ &=AA^{-}CB^{-}B+AYB-AA^{-}AYBB^{-}B\\
+ &=C+AYB-AYB=C.
+\end{align}
+若 $X$ 是任一解，在右端取 $Y=X$，则
+\begin{equation}
+ A^{-}CB^{-}+X-A^{-}AXBB^{-}=X,
+\end{equation}
+故该公式确实包含全部解。
+\end{proof}
+
+\begin{remark}
+相容条件可解释为两个空间条件：$C$ 的每一列必须属于 $\Image A$，而 $C$ 的每一行必须属于 $B$ 的行空间。若只求 $AX=C$，则对 $C$ 的每一列分别解同一个系数矩阵的方程即可；若只求 $XB=C$，可转置后同样处理。
+\end{remark}
+
+\subsection{秩标准形中的像与核}
+
+设 $\rank A=r$，并写成
+\begin{equation}
+ A=P
+ \begin{pmatrix}I_r&0\\0&0\end{pmatrix}
+ Q,
+ \qquad P,Q\text{ 可逆}.
+\end{equation}
+把
+\begin{equation}
+ P=(P_1,P_2),
+ \qquad
+ Q^{-1}=(Q_1,Q_2)
+\end{equation}
+按秩分块，则
+\begin{equation}
+ \Image A=\Image P_1,
+ \qquad
+ \Ker A=\Image Q_2.
+\end{equation}
+相应地，
+\begin{equation}
+ \Image A^T=\Image Q^T_1,
+ \qquad
+ \Ker A^T=\Image P^{-T}_2.
+\end{equation}
+这些公式把像空间、零空间和秩标准形直接联系起来。
+
+\begin{proposition}
+若 $A=P\begin{psmallmatrix}I_r&0\\0&0\end{psmallmatrix}Q$，则
+\begin{equation}
+ \Ker A=\Ker\begin{pmatrix}I_r&0\\0&0\end{pmatrix}Q,
+\end{equation}
+而左乘可逆矩阵不改变核，右乘可逆矩阵只作坐标变换。类似地，右乘可逆矩阵不改变列空间的维数，左乘可逆矩阵把列空间同构地变换。
+\end{proposition}
+
+\subsection{分块矩阵与 Schur 补}
+
+\begin{theorem}
+设
+\begin{equation}
+ M=\begin{pmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{pmatrix}
+\end{equation}
+且 $A_{11}$ 可逆。记
+\begin{equation}
+ S=A_{22}-A_{21}A_{11}^{-1}A_{12}.
+\end{equation}
+则 $M$ 可逆当且仅当 $S$ 可逆，并且
+\begin{equation}
+ M^{-1}=\begin{pmatrix}
+ A_{11}^{-1}+A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1}
+ &-A_{11}^{-1}A_{12}S^{-1}\\
+ -S^{-1}A_{21}A_{11}^{-1}&S^{-1}
+ \end{pmatrix}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+利用分解
+\begin{equation}
+ M=
+ \begin{pmatrix}I&0\\A_{21}A_{11}^{-1}&I\end{pmatrix}
+ \begin{pmatrix}A_{11}&0\\0&S\end{pmatrix}
+ \begin{pmatrix}I&A_{11}^{-1}A_{12}\\0&I\end{pmatrix}
+\end{equation}
+即可。
+\end{proof}
+
+\subsection{若干秩恒等式与可解性判别}
+
+\begin{theorem}
+设 $A\in\F^{m\times n}$、$B\in\F^{n\times m}$。则
+\begin{equation}
+ \rank(A-ABA)=\rank A+\rank(I_n-BA)-n.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+写成
+\begin{equation}
+ A-ABA=A(I_n-BA).
+\end{equation}
+Sylvester 秩不等式给出下界。另一方面，若 $x\in\Ker A$，则
+\begin{equation}
+ (I_n-BA)x=x,
+\end{equation}
+所以 $\Ker A\subseteq\Image(I_n-BA)$。这正是 Sylvester 不等式取等号的条件。
+\end{proof}
+
+\begin{proposition}
+设矩阵尺寸相容。方程
+\begin{equation}
+ ABX=A
+\end{equation}
+有解当且仅当
+\begin{equation}
+ \rank(AB)=\rank A.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+若有解，则 $\Image A\subseteq\Image(AB)$，而反向包含总成立，故两列空间相同。反之，若秩相同，则 $\Image A=\Image(AB)$，逐列求解即可构造 $X$。
+\end{proof}
+
+\begin{proposition}
+对同阶方阵 $A,B$，
+\begin{equation}
+ \rank(I-AB)\leq\rank(I-A)+\rank(I-B).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+由
+\begin{equation}
+ I-AB=(I-A)+A(I-B)
+\end{equation}
+及矩阵和、矩阵乘积的秩上界立即得到。
+\end{proof}
+
+\begin{theorem}
+若同阶方阵满足
+\begin{equation}
+ AB=BA=0,
+ \qquad
+ \rank A^2=\rank A,
+\end{equation}
+则
+\begin{equation}
+ \rank(A+B)=\rank A+\rank B.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+条件 $\rank A^2=\rank A$ 等价于
+\begin{equation}
+ \Image A\cap\Ker A=\{0\}.
+\end{equation}
+由 $AB=0$ 得 $\Image B\subseteq\Ker A$，所以
+\begin{equation}
+ \Image A\cap\Image B=\{0\}.
+\end{equation}
+对转置矩阵使用 $BA=0$ 与 $\rank(A^T)^2=\rank A^T$，同样得到行空间之交为零。由矩阵和秩等号的判别即得结论。
+\end{proof}
+
+\subsection{LU 分解}
+
+\begin{theorem}
+设 $A\in\F^{n\times n}$ 的各阶顺序主子式均非零：
+\begin{equation}
+ \det A_{1:k,1:k}\neq0,
+ \qquad k=1,\ldots,n.
+\end{equation}
+则存在唯一分解
+\begin{equation}
+ A=LU,
+\end{equation}
+其中 $L$ 是对角元全为 $1$ 的下三角矩阵，$U$ 是可逆上三角矩阵。
+\end{theorem}
+
+\begin{proof}
+顺序主子式非零保证 Gaussian 消元无需换行，所有消元乘子组成 $L$，消元后的阶梯矩阵为 $U$。若另有 $A=\widetilde L\widetilde U$，则
+\begin{equation}
+ \widetilde L^{-1}L=\widetilde U U^{-1}.
+\end{equation}
+左端是单位下三角，右端是上三角，只能都等于 $I$。
+\end{proof}
+
+\begin{remark}
+若允许置换，一般可写成
+\begin{equation}
+ PA=LU.
+\end{equation}
+数值计算中选主元的目的不仅是避免零主元，也用于控制舍入误差。
+\end{remark}
+
+\subsection{Householder 变换与 QR 分解}
+
+\begin{definition}
+对单位向量 $w\in\R^n$，矩阵
+\begin{equation}
+ H=I-2ww^T
+\end{equation}
+称为 Householder 反射。
+\end{definition}
+
+\begin{proposition}
+Householder 矩阵满足
+\begin{equation}
+ H^T=H,
+ \qquad
+ H^2=I,
+ \qquad
+ H^TH=I.
+\end{equation}
+它把 $w$ 方向取反，并保持 $w^\perp$ 中的向量不变。
+\end{proposition}
+
+\begin{theorem}
+给定非零向量 $x\in\R^n$，可选单位向量 $w$ 使相应 Householder 反射满足
+\begin{equation}
+ Hx=\pm\norm{x}_2e_1.
+\end{equation}
+例如取
+\begin{equation}
+ v=x+\operatorname{sgn}(x_1)\norm{x}_2e_1,
+ \qquad
+ w=\frac{v}{\norm v_2},
+\end{equation}
+即可避免严重的相消误差。
+\end{theorem}
+
+\begin{remark}
+依次对矩阵第一列、第二列以下部分等应用 Householder 反射，可将 $A$ 化为上三角或上梯形矩阵：
+\begin{equation}
+ H_k\cdots H_1A=R.
+\end{equation}
+于是
+\begin{equation}
+ A=QR,
+ \qquad
+ Q=H_1\cdots H_k
+\end{equation}
+是 QR 分解。该方法比经典 Gram--Schmidt 通常更稳定。
+\end{remark}

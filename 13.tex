@@ -1,0 +1,333 @@
+\section{习题课 \#13（12月6日）}
+
+\subsection{正定矩阵的判别}
+
+设 $A=A^T\in\R^{n\times n}$。下列条件等价：
+\begin{enumerate}
+  \item 对每个 $x\neq0$，
+  \begin{equation}
+   x^TAx>0;
+  \end{equation}
+  \item $A$ 的全部特征值均为正；
+  \item 存在可逆矩阵 $P$ 使
+  \begin{equation}
+   A=P^TP;
+  \end{equation}
+  \item 存在对角元为正的可逆下三角矩阵 $L$ 使
+  \begin{equation}
+   A=LL^T;
+  \end{equation}
+  \item 所有顺序主子式均为正；
+  \item 所有主子式均为正。
+\end{enumerate}
+其中第四项是 Cholesky 分解，第五项通常称为 Sylvester 判别法。
+
+\begin{proof}
+由实对称谱定理，
+\begin{equation}
+ A=Q\diag(\lambda_1,\ldots,\lambda_n)Q^T.
+\end{equation}
+于是
+\begin{equation}
+ x^TAx=\sum_i\lambda_i y_i^2,
+ \qquad y=Q^Tx,
+\end{equation}
+所以前两项等价。若所有 $\lambda_i>0$，取
+\begin{equation}
+ P=\diag(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})Q^T
+\end{equation}
+便有 $A=P^TP$；反向由 $x^TP^TPx=\norm{Px}^2>0$ 得到。
+
+Cholesky 分解可按 Schur 补归纳构造。写
+\begin{equation}
+ A=\begin{pmatrix}a&b^T\\b&C\end{pmatrix},
+ \qquad a>0.
+\end{equation}
+则 $A$ 正定当且仅当
+\begin{equation}
+ C-a^{-1}bb^T
+\end{equation}
+正定。对该 Schur 补递归分解即可。分解中前 $k$ 阶顺序主子式等于前 $k$ 个 Cholesky 对角元平方的乘积，因此正定蕴含所有顺序主子式为正；反向可按同一递推构造 Cholesky 分解。所有主子式为正显然蕴含顺序主子式为正，而正定矩阵的任意主子矩阵仍正定，故其主子式均正。
+\end{proof}
+
+\subsection{两个正定性例题}
+
+\begin{example}
+考虑
+\begin{equation}
+ f(x_1,x_2,x_3)
+ =99x_1^2-12x_1x_2+48x_1x_3
+ +130x_2^2-60x_2x_3+71x_3^2.
+\end{equation}
+其对称矩阵为
+\begin{equation}
+ A=\begin{pmatrix}
+ 99&-6&24\\
+ -6&130&-30\\
+ 24&-30&71
+ \end{pmatrix}.
+\end{equation}
+顺序主子式为
+\begin{equation}
+ \Delta_1=99>0,
+ \qquad
+ \Delta_2=99\cdot130-36=12834>0,
+\end{equation}
+以及
+\begin{equation}
+ \Delta_3=\det A=755874>0.
+\end{equation}
+故 $A$ 正定，二次型 $f$ 为正定二次型。
+\end{example}
+
+\begin{example}
+考虑参数矩阵
+\begin{equation}
+ B(t)=\begin{pmatrix}
+ 1&t&5\\
+ t&4&3\\
+ 5&3&1
+ \end{pmatrix}.
+\end{equation}
+若 $B(t)$ 正定，则前两个顺序主子式要求
+\begin{equation}
+ 4-t^2>0,
+ \qquad -2<t<2.
+\end{equation}
+但
+\begin{equation}
+ \det B(t)=-t^2+30t-105
+ =-(t-15)^2+120.
+\end{equation}
+其为正要求
+\begin{equation}
+ 15-2\sqrt{30}<t<15+2\sqrt{30},
+\end{equation}
+与 $(-2,2)$ 没有交集。因此不存在实数 $t$ 使 $B(t)$ 正定。
+\end{example}
+
+\subsection{Cholesky 分解}
+
+\begin{theorem}[Cholesky]
+若 $A=A^T\in\R^{n\times n}$ 正定，则存在唯一的下三角矩阵 $L$，其对角元全正，并满足
+\begin{equation}
+ A=LL^T.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+存在性已可由上一节的 Schur 补递推得到。为说明唯一性，若
+\begin{equation}
+ A=L_1L_1^T=L_2L_2^T,
+\end{equation}
+则
+\begin{equation}
+ L_2^{-1}L_1=L_2^TL_1^{-T}.
+\end{equation}
+左端是对角元全正的下三角矩阵，右端是上三角矩阵，所以二者必须是对角矩阵。再由
+\begin{equation}
+ (L_2^{-1}L_1)(L_2^{-1}L_1)^T=I
+\end{equation}
+及正对角元可知该对角矩阵为 $I$，故 $L_1=L_2$。
+\end{proof}
+
+\subsection{利用迹刻画正定性}
+
+\begin{theorem}
+设 $A=A^T\in\R^{n\times n}$ 可逆。则 $A$ 正定，当且仅当对每个正定矩阵 $B$ 都有
+\begin{equation}
+ \tr(AB)>0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+若 $A$ 正定，写成
+\begin{equation}
+ A=P^TP,
+ \qquad B=Q^TQ,
+\end{equation}
+其中 $P,Q$ 可逆。则
+\begin{equation}
+ \tr(AB)=\tr(P^TPQ^TQ)
+ =\tr\bigl((QP^T)(QP^T)^T\bigr)
+ =\norm{QP^T}_F^2>0.
+\end{equation}
+
+反之，若存在 $x\neq0$ 使 $x^TAx<0$，取
+\begin{equation}
+ B=xx^T+\varepsilon I
+\end{equation}
+并令 $\varepsilon>0$ 足够小，则 $B$ 正定而
+\begin{equation}
+ \tr(AB)=x^TAx+\varepsilon\tr A<0,
+\end{equation}
+矛盾。因此 $A$ 半正定。结合 $A$ 可逆可知 $A$ 正定。
+\end{proof}
+
+\subsection{实对称矩阵的相似与正交相似}
+
+\begin{theorem}
+设 $A,B\in\R^{n\times n}$ 都是实对称矩阵。则
+\begin{equation}
+ A\text{ 与 }B\text{ 相似}
+ \quad\Longleftrightarrow\quad
+ A\text{ 与 }B\text{ 正交相似}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+正交相似当然蕴含相似。反之，设
+\begin{equation}
+ AP=PB
+\end{equation}
+且 $P$ 可逆。转置后有
+\begin{equation}
+ P^TA=BP^T.
+\end{equation}
+因此
+\begin{equation}
+ B(P^TP)=P^TAP=(P^TP)B.
+\end{equation}
+令
+\begin{equation}
+ H=(P^TP)^{1/2}.
+\end{equation}
+由多项式插值或函数演算，$H$ 也与 $B$ 可交换。取极分解
+\begin{equation}
+ P=QH,
+ \qquad Q\text{ 正交}.
+\end{equation}
+代入 $AP=PB$ 得
+\begin{equation}
+ AQH=QHB=QBH.
+\end{equation}
+右乘 $H^{-1}$，得到 $AQ=QB$，即
+\begin{equation}
+ A=QBQ^T.
+\end{equation}
+\end{proof}
+
+\subsection{秩一修正下的惯性变化}
+
+对实对称矩阵 $M$，记
+\begin{equation}
+ n_+(M),\quad n_-(M),\quad n_0(M)
+\end{equation}
+分别为正、负、零特征值个数，并定义符号差
+\begin{equation}
+ s(M)=n_+(M)-n_-(M).
+\end{equation}
+
+\begin{theorem}
+设 $A=A^T\in\R^{n\times n}$ 可逆，$\alpha\in\R^n$，并令
+\begin{equation}
+ B=A-\alpha\alpha^T,
+ \qquad
+ r=\alpha^TA^{-1}\alpha.
+\end{equation}
+则
+\begin{equation}
+ s(A)=s(B)+1-\sgn(1-r),
+\end{equation}
+其中约定 $\sgn(0)=0$。也就是说，
+\begin{equation}
+ s(A)=
+ \begin{cases}
+ s(B),&r<1,\\
+ s(B)+1,&r=1,\\
+ s(B)+2,&r>1.
+ \end{cases}
+\end{equation}
+当 $r=1$ 时，$B$ 必奇异。
+\end{theorem}
+
+\begin{proof}
+考虑对称分块矩阵
+\begin{equation}
+ M=\begin{pmatrix}1&\alpha^T\\\alpha&A\end{pmatrix}.
+\end{equation}
+以左上角 $1$ 作 Schur 补，得到
+\begin{equation}
+ M\sim_{\mathrm{cong}}\diag(1,B),
+\end{equation}
+故
+\begin{equation}
+ s(M)=1+s(B).
+\end{equation}
+另一方面，以 $A$ 作 Schur 补，得到
+\begin{equation}
+ M\sim_{\mathrm{cong}}\diag(1-r,A),
+\end{equation}
+所以
+\begin{equation}
+ s(M)=\sgn(1-r)+s(A).
+\end{equation}
+比较两式即可。
+\end{proof}
+
+\subsection{秩一全一修正矩阵的惯性}
+
+令
+\begin{equation}
+ A=\lambda I_n+\ones\ones^T.
+\end{equation}
+向量 $\ones$ 是特征向量，对应特征值 $\lambda+n$；在 $\ones^\perp$ 上，$A$ 等于 $\lambda I$。因此特征值为
+\begin{equation}
+ \lambda+n\quad\text{一次},
+ \qquad
+ \lambda\quad\text{$n-1$ 次}.
+\end{equation}
+符号差为
+\begin{equation}
+ s(A)=
+ \begin{cases}
+ n,&\lambda>0,\\
+ 1,&\lambda=0,\\
+ 2-n,&-n<\lambda<0,\\
+ 1-n,&\lambda=-n,\\
+ -n,&\lambda<-n.
+ \end{cases}
+\end{equation}
+这也给出正、负惯性指数及奇异参数值。
+
+\subsection{两个特殊二次型}
+
+\begin{example}
+令
+\begin{equation}
+ q(x)=\sum_{1\leq j<k\leq n}(-1)^{j+k}x_jx_k.
+\end{equation}
+取
+\begin{equation}
+ \alpha=(1,-1,1,-1,\ldots)^T.
+\end{equation}
+则 $q(x)=x^TAx$ 的矩阵满足
+\begin{equation}
+ A=-\frac12I+\frac12\alpha\alpha^T.
+\end{equation}
+因为 $\alpha^T\alpha=n$，$A$ 在 $\alpha$ 方向上的特征值为
+\begin{equation}
+ \frac{n-1}{2},
+\end{equation}
+在 $\alpha^\perp$ 上的特征值为 $-1/2$。因此 $n>1$ 时其惯性为
+\begin{equation}
+ (n_+,n_-,n_0)=(1,n-1,0).
+\end{equation}
+\end{example}
+
+\begin{example}
+令
+\begin{equation}
+ g(x)=\sum_{1\leq j<k\leq n}|j-k|x_jx_k.
+\end{equation}
+其对称矩阵 $D$ 的对角元为 $0$，非对角元为
+\begin{equation}
+ D_{jk}=\frac12|j-k|.
+\end{equation}
+依次对相邻行、列作差，可将 $D$ 合同化为一个正的一维块与 $n-1$ 个负的一维块。因此
+\begin{equation}
+ (n_+(D),n_-(D),n_0(D))=(1,n-1,0),
+ \qquad n\geq2.
+\end{equation}
+原稿中的连续合同行列变换正是这一结论的直接计算证明。
+\end{example}

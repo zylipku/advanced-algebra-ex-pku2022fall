@@ -1,0 +1,347 @@
+\section{习题课 \#12（11月29日）}
+
+\subsection{实斜对称矩阵的合同标准形}
+
+令
+\begin{equation}
+ J=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\end{equation}
+
+\begin{theorem}
+设 $A\in\F^{n\times n}$ 满足 $A^T=-A$，且 $\operatorname{char}\F\neq2$。若 $\rank A=2r$，则存在可逆矩阵 $P$ 使
+\begin{equation}
+ P^TAP=\diag(\underbrace{J,\ldots,J}_{r\text{ 个}},0_{n-2r}).
+\end{equation}
+特别地，斜对称矩阵的秩为偶数。
+\end{theorem}
+
+\begin{proof}
+对 $n$ 归纳。若 $A=0$ 则结论显然。否则存在 $i\neq j$ 使 $a_{ij}\neq0$。同时置换第 $i,j$ 行和列，并作一个对角缩放，可使左上角 $2\times2$ 块变为 $J$。此时
+\begin{equation}
+ A=\begin{pmatrix}J&B\\-B^T&C\end{pmatrix},
+ \qquad C^T=-C.
+\end{equation}
+利用保持合同关系的分块消元，可消去 $B$，得到
+\begin{equation}
+ A\sim_{\mathrm{cong}}\begin{pmatrix}J&0\\0&C+B^TJB\end{pmatrix}.
+\end{equation}
+右下角仍为斜对称矩阵，对它应用归纳假设即可。
+\end{proof}
+
+\subsection{二次型分解为两个一次型}
+
+设实二次型
+\begin{equation}
+ q(x)=x^TAx,
+ \qquad A=A^T\in\R^{n\times n}.
+\end{equation}
+
+\begin{theorem}
+非零二次型 $q$ 可以分解为两个实一次齐次多项式之积
+\begin{equation}
+ q(x)=(\alpha^Tx)(\beta^Tx)
+\end{equation}
+当且仅当下列两种情形之一成立：
+\begin{enumerate}
+  \item $\rank A=1$；
+  \item $\rank A=2$，且 $A$ 的正、负惯性指数均为 $1$。
+\end{enumerate}
+零二次型当然也可作平凡分解。
+\end{theorem}
+
+\begin{proof}
+若有分解，则
+\begin{equation}
+ A=\frac12(\alpha\beta^T+\beta\alpha^T),
+\end{equation}
+所以 $\rank A\leq2$。若 $\alpha,\beta$ 线性相关，则 $q$ 是一个一次型平方的常数倍，秩为 $1$。若二者线性无关，则在它们张成的二维空间上可换基写成
+\begin{equation}
+ q=y_1y_2
+ =\frac14\bigl((y_1+y_2)^2-(y_1-y_2)^2\bigr),
+\end{equation}
+故正、负惯性指数各为 $1$。
+
+反之，秩 $1$ 时由 Sylvester 惯性定理可写成 $q=\pm y_1^2$，显然可分解。秩 $2$ 且惯性为 $(1,1)$ 时可写成
+\begin{equation}
+ q=y_1^2-y_2^2=(y_1+y_2)(y_1-y_2).
+\end{equation}
+\end{proof}
+
+\subsection{Rayleigh 商与极值特征值}
+
+设 $A=A^T\in\R^{n\times n}$，特征值按
+\begin{equation}
+ \lambda_1\geq\lambda_2\geq\cdots\geq\lambda_n
+\end{equation}
+排列。对 $x\neq0$ 定义 Rayleigh 商
+\begin{equation}
+ R_A(x)=\frac{x^TAx}{x^Tx}.
+\end{equation}
+
+\begin{theorem}
+有
+\begin{equation}
+ \max_{x\neq0}R_A(x)=\lambda_1,
+ \qquad
+ \min_{x\neq0}R_A(x)=\lambda_n.
+\end{equation}
+等号分别在最大、最小特征值对应的特征空间上取得。
+\end{theorem}
+
+\begin{proof}
+由谱定理，$A=QDQ^T$，其中 $D=\diag(\lambda_1,\ldots,\lambda_n)$。令 $y=Q^Tx$，则
+\begin{equation}
+ R_A(x)=\frac{\sum_{i=1}^n\lambda_i y_i^2}
+ {\sum_{i=1}^n y_i^2},
+\end{equation}
+它是各特征值的加权平均，故位于 $[\lambda_n,\lambda_1]$ 内。
+\end{proof}
+
+\subsection{Courant--Fischer 极小极大原理}
+
+\begin{theorem}[Courant--Fischer]
+对 $k=1,\ldots,n$，有
+\begin{equation}
+ \lambda_k
+ =\max_{\substack{S\leq\R^n\\\dim S=k}}
+ \ \min_{\substack{x\in S\\x\neq0}}R_A(x)
+\end{equation}
+以及
+\begin{equation}
+ \lambda_k
+ =\min_{\substack{T\leq\R^n\\\dim T=n-k+1}}
+ \ \max_{\substack{x\in T\\x\neq0}}R_A(x).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+设 $v_1,\ldots,v_n$ 是按上述顺序排列的标准正交特征向量。取
+\begin{equation}
+ S_0=\Span(v_1,\ldots,v_k),
+\end{equation}
+则 $S_0$ 上 Rayleigh 商的最小值为 $\lambda_k$。另一方面，任意 $k$ 维子空间 $S$ 与
+\begin{equation}
+ \Span(v_k,\ldots,v_n)
+\end{equation}
+维数之和大于 $n$，故有非零交点。在该交点上 $R_A(x)\leq\lambda_k$。这证明第一个公式。第二个公式同理，或对 $-A$ 应用第一个公式。
+\end{proof}
+
+\subsection{可交换矩阵的同时标准化}
+
+\begin{theorem}[同时上三角化]
+若 $A_1,\ldots,A_s\in\C^{n\times n}$ 两两可交换，则存在同一个可逆矩阵 $P$，使
+\begin{equation}
+ P^{-1}A_jP
+\end{equation}
+对所有 $j$ 都是上三角矩阵。
+\end{theorem}
+
+\begin{proof}
+先证明存在公共特征向量。取 $A_1$ 的一个特征空间 $E$。由于 $A_jA_1=A_1A_j$，每个 $A_j$ 都保持 $E$ 不变。在 $E$ 上继续取 $A_2$ 的特征空间，如此反复，可得到非零公共不变子空间，最终取得公共特征向量。以该向量作为第一基向量后，对商空间归纳。
+\end{proof}
+
+\begin{theorem}[同时对角化]
+若 $A_1,\ldots,A_s\in\C^{n\times n}$ 两两可交换且各自可对角化，则它们可被同一个可逆矩阵同时对角化。
+\end{theorem}
+
+\begin{proof}
+把空间分解为 $A_1$ 的特征空间直和。可交换性保证每个特征空间都被其余矩阵保持。其余矩阵在这些不变子空间上的限制仍可对角化，对每个子空间递归处理并合并所选基即可。
+\end{proof}
+
+\begin{corollary}
+若 $A_1,\ldots,A_s$ 是两两可交换的实对称矩阵，则存在同一个正交矩阵 $Q$ 使所有
+\begin{equation}
+ Q^TA_jQ
+\end{equation}
+均为实对角矩阵。
+\end{corollary}
+
+\subsection{平方和表示与惯性指数的估计}
+
+设二次型写成
+\begin{equation}
+ q(x)=\sum_{j=1}^s(\alpha_j^Tx)^2
+ -\sum_{j=s+1}^{s+t}(\alpha_j^Tx)^2.
+\end{equation}
+
+\begin{proposition}
+$q$ 的正惯性指数不超过 $s$，负惯性指数不超过 $t$。
+\end{proposition}
+
+\begin{proof}
+令 $B$ 的各行为 $\alpha_1^T,\ldots,\alpha_s^T$，则
+\begin{equation}
+ \dim\Ker B\geq n-s.
+\end{equation}
+在 $\Ker B$ 上，前 $s$ 个正平方项全为零，所以 $q\leq0$。若正惯性指数大于 $s$，则存在维数大于 $s$ 的子空间 $V$，使 $q$ 在 $V\setminus\{0\}$ 上严格为正。由维数公式，$V\cap\Ker B$ 含非零向量，矛盾。负惯性指数的估计对 $-q$ 使用同一论证。
+\end{proof}
+
+\subsection{奇异值分解与极分解}
+
+\begin{theorem}[奇异值分解]
+对任意 $A\in\C^{m\times n}$，存在酉矩阵
+\begin{equation}
+ U\in\C^{m\times m},
+ \qquad V\in\C^{n\times n}
+\end{equation}
+以及矩形对角矩阵
+\begin{equation}
+ \Sigma=\diag(\sigma_1,\ldots,\sigma_r,0,\ldots),
+ \qquad
+ \sigma_1\geq\cdots\geq\sigma_r>0,
+\end{equation}
+使
+\begin{equation}
+ A=U\Sigma V^*.
+\end{equation}
+非零 $\sigma_i$ 是 $A^*A$ 的正特征值平方根，称为奇异值。
+\end{theorem}
+
+\begin{proof}
+对正半定矩阵 $A^*A$ 作酉对角化：
+\begin{equation}
+ V^*A^*AV=\diag(\sigma_1^2,\ldots,\sigma_r^2,0,\ldots,0).
+\end{equation}
+令 $v_i$ 为 $V$ 的列，并取
+\begin{equation}
+ u_i=\sigma_i^{-1}Av_i,
+ \qquad i=1,\ldots,r.
+\end{equation}
+这些向量标准正交，把它们补成 $\C^m$ 的标准正交基即可得到 $U$。
+\end{proof}
+
+\begin{theorem}[极分解]
+任意 $A\in\C^{m\times n}$ 可写成
+\begin{equation}
+ A=QH,
+ \qquad
+ H=(A^*A)^{1/2}\succeq0,
+\end{equation}
+其中 $Q$ 在 $\Image H$ 上是等距映射，并可延拓为适当的部分酉矩阵。若 $A$ 为可逆方阵，则 $Q$ 为酉矩阵，而且分解唯一：
+\begin{equation}
+ Q=A(A^*A)^{-1/2}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+由 SVD $A=U\Sigma V^*$，取
+\begin{equation}
+ H=V\Sigma V^*,
+ \qquad
+ Q=UV^*
+\end{equation}
+在方阵可逆情形即得结论。矩形或退化情形中只在非零奇异子空间上定义对应的部分等距映射，再作延拓。
+\end{proof}
+
+\subsection{二次型的配方法与合同对角化}
+
+设
+\begin{equation}
+ q(x)=x^TAx,
+ \qquad A=A^T,
+ \qquad \operatorname{char}\F\neq2.
+\end{equation}
+若 $a_{11}\neq0$，则
+\begin{equation}
+ q(x)=a_{11}
+ \left(x_1+\sum_{j=2}^n\frac{a_{1j}}{a_{11}}x_j\right)^2
+ +q_1(x_2,\ldots,x_n),
+\end{equation}
+从而把维数降低一阶。若所有对角元均为零但某个 $a_{ij}\neq0$，可先作变量替换
+\begin{equation}
+ y_i=x_i+x_j,
+ \qquad
+ y_j=x_i-x_j,
+\end{equation}
+使新表达式出现非零平方项，再继续配方。由此可逐步得到合同对角形。
+
+\begin{example}
+将
+\begin{equation}
+ q(x_1,x_2,x_3)=x_1x_2+x_1x_3-3x_2x_3
+\end{equation}
+化为标准形。先令
+\begin{equation}
+ x_1=y_1+y_2,
+ \qquad
+ x_2=y_1-y_2,
+ \qquad
+ x_3=y_3.
+\end{equation}
+则
+\begin{align}
+ q&=y_1^2-y_2^2-2y_1y_3+4y_2y_3\\
+  &=(y_1-y_3)^2-(y_2-2y_3)^2+3y_3^2.
+\end{align}
+再令
+\begin{equation}
+ z_1=y_1-y_3,
+ \qquad
+ z_2=y_2-2y_3,
+ \qquad
+ z_3=y_3,
+\end{equation}
+得到
+\begin{equation}
+ q=z_1^2-z_2^2+3z_3^2.
+\end{equation}
+相应的可逆变量关系为
+\begin{equation}
+ x_1=z_1+z_2+3z_3,
+ \qquad
+ x_2=z_1-z_2-z_3,
+ \qquad
+ x_3=z_3.
+\end{equation}
+\end{example}
+
+\subsection{对偶空间}
+
+\begin{definition}
+向量空间 $V$ 的对偶空间定义为
+\begin{equation}
+ V^*=\Hom(V,\F),
+\end{equation}
+即 $V$ 上所有线性函数的空间。
+\end{definition}
+
+若 $V$ 有基 $e_1,\ldots,e_n$，定义线性函数 $e_1^*,\ldots,e_n^*$ 使
+\begin{equation}
+ e_i^*(e_j)=\delta_{ij}.
+\end{equation}
+则它们构成 $V^*$ 的一组基，称为对偶基。因此有限维时
+\begin{equation}
+ \dim V^*=\dim V,
+\end{equation}
+并且一旦选择基便得到一个同构 $V\cong V^*$。不过该同构依赖于基或内积，并非自然给定。
+
+相反，映射
+\begin{equation}
+ \iota:V\longrightarrow V^{**},
+ \qquad
+ \iota(v)(f)=f(v)
+\end{equation}
+不依赖任何基。有限维时它是同构，称为典范同构。
+
+\begin{example}[无限维时 $V$ 与 $V^*$ 的巨大差别]
+令
+\begin{equation}
+ V=\R^{(\N)}
+ =\set{(a_i)_{i\geq0}:a_i\text{ 只有有限个非零项}}.
+\end{equation}
+它有可数 Hamel 基 $e_0,e_1,\ldots$。任意序列 $b=(b_i)_{i\geq0}$ 都定义一个线性函数
+\begin{equation}
+ f_b(a)=\sum_{i\geq0}b_i a_i,
+\end{equation}
+因为对每个 $a\in V$，该和只有有限项。反之，每个线性函数都由 $f(e_i)$ 唯一确定，所以
+\begin{equation}
+ V^*\cong\R^{\N},
+\end{equation}
+即所有实数序列的空间。
+
+而 $\R^{\N}$ 不存在可数 Hamel 基。事实上，对不同实数 $t$，序列
+\begin{equation}
+ v(t)=(1,t,t^2,t^3,\ldots)
+\end{equation}
+构成一个不可数线性无关族，因为任取有限多个不同的 $t$，前若干坐标形成 Vandermonde 矩阵。故在无限维情形，$V$ 与 $V^*$ 通常不再同构。
+\end{example}

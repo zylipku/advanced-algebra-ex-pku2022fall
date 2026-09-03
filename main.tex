@@ -1,0 +1,94 @@
+\documentclass[UTF8,a4paper,11pt]{ctexart}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools,bm}
+\usepackage{geometry}
+\usepackage{booktabs,array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage{microtype}
+\usepackage{mathrsfs}
+
+\geometry{left=2.35cm,right=2.35cm,top=2.35cm,bottom=2.35cm}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=blue!60!black,
+  urlcolor=blue!60!black,
+  pdftitle={线性代数习题课整理稿（1班，第1--13次）}
+}
+\setlist{itemsep=0.25em,topsep=0.4em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.2em}
+\allowdisplaybreaks[3]
+\numberwithin{equation}{section}
+
+\newcommand{\F}{\mathbb F}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Ker}{\operatorname{ker}}
+\newcommand{\Image}{\operatorname{Im}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\Id}{I}
+\newcommand{\ones}{\bm 1}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\inner}[2]{\left\langle #1,#2\right\rangle}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{exercise}[theorem]{习题}
+\newtheorem{example}[theorem]{例}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\newenvironment{solution}{\begin{proof}[解]}{\end{proof}}
+
+\title{线性代数习题课整理稿\\\large 1班，第1--13次}
+\author{依据手写讲义统一排版}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+本文档依据十三份手写习题课讲义整理而成。原稿中的定义、命题、典型例题与主要推导均按原顺序重写，重复的初等行变换适度压缩，但保留判别方法、关键中间式与最终结论。全文采用统一符号与版式，并按每份源文件分别存放于独立的 \texttt{sections/XX.tex} 文件中，由主文件依次通过 \verb|\input| 引入。
+\end{abstract}
+\tableofcontents
+\clearpage
+
+\input{sections/01}
+\input{sections/02}
+\input{sections/03}
+\input{sections/04}
+\input{sections/05}
+\input{sections/06}
+\input{sections/07}
+\input{sections/08}
+\input{sections/09}
+\input{sections/10}
+\input{sections/11}
+\input{sections/12}
+\input{sections/13}
+
+\end{document}
