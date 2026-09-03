@@ -1,0 +1,313 @@
+\section{习题课 \#1（9月13日）}
+
+\subsection{Gauss--Jordan 消元与线性方程组}
+
+本次课首先讨论含参数的非齐次线性方程组。核心工具是将方程组写成增广矩阵，并通过可逆的初等行变换化为行阶梯形或简化行阶梯形。
+
+\begin{example}
+考虑
+\begin{equation}
+\begin{cases}
+ x_1-x_2+x_3=1,\\
+ x_1-x_2-x_3=3,\\
+ 2x_1-2x_2-x_3=5.
+\end{cases}
+\end{equation}
+其增广矩阵为
+\begin{equation}
+\left(
+\begin{array}{ccc|c}
+1&-1&1&1\\
+1&-1&-1&3\\
+2&-2&-1&5
+\end{array}
+\right).
+\end{equation}
+经初等行变换可化为
+\begin{equation}
+\left(
+\begin{array}{ccc|c}
+1&-1&0&2\\
+0&0&1&-1\\
+0&0&0&0
+\end{array}
+\right).
+\end{equation}
+因此解的一般形式为
+\begin{equation}
+ x_1=x_2+2,
+ \qquad x_3=-1,
+ \qquad x_2\in\F.
+\end{equation}
+\end{example}
+
+\begin{definition}
+矩阵的三类初等行变换为
+\begin{enumerate}
+  \item 交换两行；
+  \item 将某一行乘以非零常数；
+  \item 将某一行的常数倍加到另一行。
+\end{enumerate}
+它们都可逆，因此不会改变线性方程组的解集。
+\end{definition}
+
+\begin{remark}
+消元过程中每一步都必须是等价变形。对于不等式，这一点尤其容易被忽略。例如
+\begin{equation}
+ \frac{2x+3}{x+4}\leq 1
+ \quad\Longleftrightarrow\quad
+ \frac{x-1}{x+4}\leq 0,
+\end{equation}
+不能在不知道 $x+4$ 符号的情况下直接同乘 $x+4$。正确答案为
+\begin{equation}
+ x\in(-4,1].
+\end{equation}
+同理，在求方程 $f(x)=0$ 的解集时，若某一步只保留了单向蕴含，就必须额外检查增根或漏根。Gauss--Jordan 消元之所以可靠，正是因为每一步初等行变换均可逆。
+\end{remark}
+
+\subsection{解的三种可能与数域的影响}
+
+线性方程组的解集只有三种可能：无解、唯一解或无穷多解。行化简后可按如下方式判断。
+\begin{enumerate}
+  \item 若出现形如 $(0,\ldots,0\mid c)$ 且 $c\neq0$ 的行，则方程组无解。
+  \item 若每个未知量所在列都有主元，则方程组至多有一个解；在相容时即为唯一解。
+  \item 若方程组相容且存在自由变量，则有无穷多解。
+\end{enumerate}
+
+所取数域也会影响结论。例如同一个整数系数方程组，在 $\Q$、$\R$ 与有限域 $\F_p$ 上可能具有不同的秩和不同的解数。行变换中的除法只能除以当前数域中的非零元素。
+
+\subsection{典型计算}
+
+\begin{exercise}[线性规划的一个简单例子]
+设三种原料的某种成分含量分别为 $12\%$、$15\%$ 和 $22\%$。若总量固定，并且第三种原料的用量固定为 $5$，则约束可整理为
+\begin{equation}
+ x_1+x_2=5,
+ \qquad x_3=5,
+ \qquad x_1,x_2,x_3\geq0.
+\end{equation}
+目标函数为
+\begin{equation}
+ L=0.12x_1+0.15x_2+0.22x_3.
+\end{equation}
+求 $L$ 的可能范围。
+\end{exercise}
+
+\begin{solution}
+由 $x_1=5-x_2$ 和 $0\leq x_2\leq5$，
+\begin{equation}
+ L=0.12(5-x_2)+0.15x_2+0.22\cdot5
+   =1.7+0.03x_2.
+\end{equation}
+故
+\begin{equation}
+ 1.7\leq L\leq1.85.
+\end{equation}
+\end{solution}
+
+\begin{exercise}
+设 $n\geq2$，$A$ 是元素均为 $\pm1$ 的 $n\times n$ 整数矩阵。证明 $\det A$ 为偶数。
+\end{exercise}
+
+\begin{proof}
+模 $2$ 意义下有 $1\equiv-1$，故 $A$ 的所有元素均同余于 $1$。于是 $A$ 在 $\F_2$ 上的各行相同，秩至多为 $1<n$，从而
+\begin{equation}
+ \det A\equiv0\pmod2.
+\end{equation}
+故 $\det A$ 为偶数。
+\end{proof}
+
+\begin{exercise}[插值方程的相容性]
+问是否存在二次多项式
+\begin{equation}
+ p(x)=ax^2+bx+c
+\end{equation}
+同时通过四个给定点。将插值条件写成线性方程组后，可用增广矩阵判断相容性。
+\end{exercise}
+
+\begin{solution}
+以原稿中的点
+\begin{equation}
+ (0,2),\quad (-4,1),\quad (-1,3),\quad (1,2)
+\end{equation}
+为例，代入后得到
+\begin{equation}
+\begin{cases}
+ c=2,\\
+ 16a-4b+c=1,\\
+ a-b+c=3,\\
+ a+b+c=2.
+\end{cases}
+\end{equation}
+由后两式及 $c=2$ 得
+\begin{equation}
+ a-b=1,
+ \qquad
+ a+b=0,
+\end{equation}
+从而 $a=\tfrac12$、$b=-\tfrac12$。但此时
+\begin{equation}
+ 16a-4b+c=8+2+2=12\neq1,
+\end{equation}
+故方程组不相容，不存在满足条件的二次多项式。这个例子说明，当插值条件的数目超过自由系数数目时，必须额外检查数据之间的相容性。
+\end{solution}
+
+\begin{exercise}[一类对称耦合方程组]
+设 $a_i\neq0$，且
+\begin{equation}
+ 1+\sum_{i=1}^n a_i^{-1}\neq0.
+\end{equation}
+求解
+\begin{equation}
+ (1+a_i)x_i+\sum_{j\neq i}x_j=b_i,
+ \qquad i=1,\ldots,n.
+\end{equation}
+\end{exercise}
+
+\begin{solution}
+令
+\begin{equation}
+ X_0=\sum_{j=1}^n x_j.
+\end{equation}
+第 $i$ 个方程化为
+\begin{equation}
+ a_i x_i+X_0=b_i,
+ \qquad
+ x_i=a_i^{-1}(b_i-X_0).
+\end{equation}
+求和得
+\begin{equation}
+ X_0=\sum_{i=1}^n a_i^{-1}b_i-X_0\sum_{i=1}^n a_i^{-1},
+\end{equation}
+故
+\begin{equation}
+ X_0=\frac{\sum_{i=1}^n a_i^{-1}b_i}
+ {1+\sum_{i=1}^n a_i^{-1}}.
+\end{equation}
+因此
+\begin{equation}
+ x_i=a_i^{-1}b_i-
+ \frac{a_i^{-1}\sum_{j=1}^n a_j^{-1}b_j}
+ {1+\sum_{j=1}^n a_j^{-1}},
+ \qquad i=1,\ldots,n.
+\end{equation}
+\end{solution}
+
+\begin{exercise}[含参数非齐次方程组]
+讨论
+\begin{equation}
+\begin{cases}
+ x_1+x_2+x_3+x_4+x_5=1,\\
+ 3x_1+2x_2+x_3+x_4-3x_5=a,\\
+ x_2+2x_3+2x_4+6x_5=3,\\
+ 5x_1+4x_2+3x_3+3x_4-x_5=b
+\end{cases}
+\end{equation}
+的相容性。
+\end{exercise}
+
+\begin{solution}
+对增广矩阵作消元，最后两条独立的相容性条件为
+\begin{equation}
+ a=0,
+ \qquad b=2.
+\end{equation}
+在此条件下有三个自由变量，可取 $x_3,x_4,x_5$，并得到
+\begin{equation}
+ x_1=x_3+x_4+5x_5-2,
+ \qquad
+ x_2=-2x_3-2x_4-6x_5+3.
+\end{equation}
+若 $(a,b)\neq(0,2)$，消元中出现矛盾行，方程组无解。
+\end{solution}
+
+\begin{exercise}[含参数齐次方程组]
+讨论
+\begin{equation}
+\begin{cases}
+ x_1+x_2+x_3=0,\\
+ 2x_1+x_2-a x_3=0,\\
+ x_1-2x_2-3x_3=0
+\end{cases}
+\end{equation}
+的解。
+\end{exercise}
+
+\begin{solution}
+系数矩阵行列式为
+\begin{equation}
+ \det\begin{pmatrix}
+ 1&1&1\\
+ 2&1&-a\\
+ 1&-2&-3
+ \end{pmatrix}
+ =-3a-2.
+\end{equation}
+因此当 $a\neq-\frac23$ 时只有零解；当 $a=-\frac23$ 时秩下降，存在一维非零解空间。
+\end{solution}
+
+\begin{exercise}[两个行列式恒等式]
+设 $a_i,b_i,c_i\in\F$。证明
+\begin{equation}
+ \det\begin{pmatrix}
+ a_1-b_1&b_1-c_1&c_1-a_1\\
+ a_2-b_2&b_2-c_2&c_2-a_2\\
+ a_3-b_3&b_3-c_3&c_3-a_3
+ \end{pmatrix}=0,
+\end{equation}
+并证明
+\begin{equation}
+ \det\begin{pmatrix}
+ a_1+b_1&b_1+c_1&c_1+a_1\\
+ a_2+b_2&b_2+c_2&c_2+a_2\\
+ a_3+b_3&b_3+c_3&c_3+a_3
+ \end{pmatrix}
+ =2\det\begin{pmatrix}
+ a_1&b_1&c_1\\
+ a_2&b_2&c_2\\
+ a_3&b_3&c_3
+ \end{pmatrix}.
+\end{equation}
+\end{exercise}
+
+\begin{proof}
+第一个矩阵三列之和为零，故列向量线性相关。对第二个矩阵，记右端三列为 $a,b,c$，则左端三列为 $a+b,b+c,c+a$。相应的列变换矩阵为
+\begin{equation}
+ T=\begin{pmatrix}1&0&1\\1&1&0\\0&1&1\end{pmatrix},
+ \qquad \det T=2,
+\end{equation}
+所以左端行列式等于 $2\det(a,b,c)$。
+\end{proof}
+
+\begin{exercise}[由两个已知解反推参数]
+已知
+\begin{equation}
+ (0,1,0)^T,
+ \qquad (-3,2,2)^T
+\end{equation}
+均为方程组
+\begin{equation}
+\begin{cases}
+ x_1-x_2+2x_3=-1,\\
+ 3x_1+x_2+4x_3=1,\\
+ ax_1+bx_2+cx_3=d
+\end{cases}
+\end{equation}
+的解。求使该方程组有无穷多解的参数条件。
+\end{exercise}
+
+\begin{solution}
+代入第一个解得 $b=d$；代入第二个解得
+\begin{equation}
+ -3a+2b+2c=d.
+\end{equation}
+结合 $b=d$ 可得
+\begin{equation}
+ 3a=b+2c.
+\end{equation}
+前两行系数向量线性无关，因此它们给出秩为 $2$ 的相容系统。第三行要使秩不增加，必须是前两行的线性组合，这恰好等价于
+\begin{equation}
+ b=d,
+ \qquad 3a=b+2c.
+\end{equation}
+在此条件下未知数个数为 $3$ 而秩为 $2$，故解集为一条仿射直线。
+\end{solution}

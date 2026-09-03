@@ -1,0 +1,432 @@
+\section{习题课 \#7（10月25日）}
+
+\subsection{Sylvester 秩不等式及等号条件}
+
+设
+\begin{equation}
+ A\in\F^{m\times n},
+ \qquad
+ B\in\F^{n\times p}.
+\end{equation}
+
+\begin{theorem}[Sylvester 秩不等式]
+有
+\begin{equation}
+ \rank(AB)\geq\rank A+\rank B-n.
+\end{equation}
+并且等号成立当且仅当
+\begin{equation}
+ \Ker A\subseteq\Image B.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+将 $A$ 限制到 $\Image B$ 上。其像为 $\Image(AB)$，核为 $\Ker A\cap\Image B$，故
+\begin{equation}
+ \rank(AB)
+ =\rank B-\dim(\Ker A\cap\Image B).
+\end{equation}
+因为
+\begin{equation}
+ \dim(\Ker A\cap\Image B)\leq\dim\Ker A=n-\rank A,
+\end{equation}
+即得不等式。等号成立恰好要求
+\begin{equation}
+ \dim(\Ker A\cap\Image B)=\dim\Ker A,
+\end{equation}
+也就是 $\Ker A\subseteq\Image B$。
+\end{proof}
+
+\begin{corollary}
+下列条件等价：
+\begin{enumerate}
+  \item $\rank(AB)=\rank A+\rank B-n$；
+  \item $\Ker A\subseteq\Image B$；
+  \item 存在 $X\in\F^{n\times m}$ 与 $Y\in\F^{p\times n}$，使
+  \begin{equation}
+   XA+BY=I_n.
+  \end{equation}
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+第三个条件意味着每个 $v\in\Ker A$ 满足 $v=BYv\in\Image B$。反之，若 $\Ker A\subseteq\Image B$，取直和分解
+\begin{equation}
+ \F^n=U\oplus\Ker A.
+\end{equation}
+映射 $A|_U$ 单射。可构造 $X$ 使 $XA$ 是到 $U$ 的投影，再构造 $Y$ 使 $BY$ 是到 $\Ker A$ 的投影，于是二者之和为恒等映射。
+\end{proof}
+
+\subsection{满秩分解与秩标准形}
+
+\begin{theorem}[满秩分解]
+若 $A\in\F^{m\times n}$ 且 $\rank A=r$，则存在
+\begin{equation}
+ P\in\F^{m\times r},
+ \qquad
+ Q\in\F^{r\times n}
+\end{equation}
+使
+\begin{equation}
+ A=PQ,
+ \qquad
+ \rank P=\rank Q=r.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+从 $A$ 中选取 $r$ 个极大线性无关列组成 $P$。$A$ 的每一列都可唯一表示为 $P$ 的列向量的线性组合，把这些坐标作为 $Q$ 的列便有 $A=PQ$。由于 $A$ 的秩为 $r$，$Q$ 必满行秩。
+\end{proof}
+
+\begin{proposition}[满秩分解的唯一性]
+若
+\begin{equation}
+ A=P_1Q_1=P_2Q_2
+\end{equation}
+都是满秩分解，则存在唯一 $S\in\GL_r(\F)$ 使
+\begin{equation}
+ P_2=P_1S,
+ \qquad
+ Q_2=S^{-1}Q_1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$P_1,P_2$ 的列空间都等于 $\Image A$，故 $P_2=P_1S$。两组列都是基，所以 $S$ 可逆。代回并利用 $P_1$ 满列秩即可得到 $Q_2=S^{-1}Q_1$。
+\end{proof}
+
+\begin{corollary}[秩标准形]
+存在可逆矩阵 $U\in\GL_m(\F)$、$V\in\GL_n(\F)$，使
+\begin{equation}
+ UAV=\begin{pmatrix}
+ I_r&0\\
+ 0&0
+ \end{pmatrix}.
+\end{equation}
+因此两个同型矩阵等价当且仅当它们的秩相同。
+\end{corollary}
+
+\begin{remark}
+若经过行列置换后，$A$ 的左上角 $r\times r$ 子矩阵 $A_{11}$ 可逆，写成
+\begin{equation}
+ A=\begin{pmatrix}
+ A_{11}&A_{12}\\
+ A_{21}&A_{22}
+ \end{pmatrix},
+\end{equation}
+则 $\rank A=r$ 当且仅当
+\begin{equation}
+ A_{22}=A_{21}A_{11}^{-1}A_{12}.
+\end{equation}
+这就是 Schur 补为零的情形。
+\end{remark}
+
+\subsection{矩阵和的秩}
+
+\begin{theorem}
+对同型矩阵 $A,B$，
+\begin{equation}
+ \rank(A+B)\leq\rank A+\rank B.
+\end{equation}
+等号成立当且仅当
+\begin{equation}
+ \Image A\cap\Image B=\{0\}
+\end{equation}
+且
+\begin{equation}
+ \Image A^T\cap\Image B^T=\{0\}.
+\end{equation}
+复数情形可将转置理解为行空间，而不必使用共轭转置。
+\end{theorem}
+
+\begin{proof}
+因为
+\begin{equation}
+ \Image(A+B)\subseteq\Image A+\Image B,
+\end{equation}
+先得上界。若等号成立，则
+\begin{equation}
+ \rank(A+B)=\dim(\Image A+\Image B)
+\end{equation}
+迫使列空间之交为零；对转置应用同一论证得到行空间之交为零。
+
+反之，若两种交都为零，可选取适当的可逆行、列变换，使
+\begin{equation}
+ A\sim
+ \begin{pmatrix}
+ I_r&0&0\\
+ 0&0&0\\
+ 0&0&0
+ \end{pmatrix},
+ \qquad
+ B\sim
+ \begin{pmatrix}
+ 0&0&0\\
+ 0&I_s&0\\
+ 0&0&0
+ \end{pmatrix},
+\end{equation}
+且两者使用相同的外侧变换。于是 $A+B$ 的秩为 $r+s$。
+\end{proof}
+
+\begin{corollary}
+对同型矩阵 $A,B$，以下三条中的任意两条推出第三条：
+\begin{equation}
+ \rank(A+B)=\rank A+\rank B,
+\end{equation}
+\begin{equation}
+ \rank(A^T,B^T)=\rank A+\rank B,
+\end{equation}
+以及相应列空间、行空间直和条件。
+\end{corollary}
+
+\subsection{Binet--Cauchy 公式与伴随矩阵}
+
+\begin{theorem}[Binet--Cauchy 公式]
+设 $A\in\F^{m\times n}$、$B\in\F^{n\times m}$，且 $m\leq n$。对 $m$ 元指标集
+\begin{equation}
+ I=\{i_1<\cdots<i_m\}\subseteq\{1,\ldots,n\},
+\end{equation}
+记 $A_{:,I}$ 为取 $A$ 的这些列所得方阵，$B_{I,:}$ 为取 $B$ 的这些行所得方阵。则
+\begin{equation}
+ \det(AB)=\sum_{|I|=m}\det(A_{:,I})\det(B_{I,:}).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+把 $AB$ 的每一列写成 $A$ 的列向量的线性组合，并对行列式使用多重线性性。若所选指标有重复，相应行列式为零；将互异指标按递增顺序重排后，两个置换符号相消，便得到上述求和式。
+\end{proof}
+
+\begin{corollary}[Gram 行列式]
+若 $A\in\R^{n\times m}$ 且 $n\geq m$，则
+\begin{equation}
+ \det(A^TA)=\sum_{|I|=m}\det(A_{I,:})^2\geq0.
+\end{equation}
+并且 $\det(A^TA)>0$ 当且仅当 $A$ 满列秩。
+\end{corollary}
+
+\begin{proposition}
+对任意同阶方阵 $A,B$，有
+\begin{equation}
+ \adj(AB)=\adj(B)\adj(A).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+当 $A,B$ 都可逆时，
+\begin{equation}
+ \adj(AB)=\det(AB)(AB)^{-1}
+ =\det B\,B^{-1}\det A\,A^{-1}
+ =\adj(B)\adj(A).
+\end{equation}
+两边的每个矩阵元都是 $A,B$ 各元素的多项式。把 $A,B$ 分别替换为 $A+tI,B+sI$，在除有限多个参数值外二者可逆，于是多项式恒等式对所有 $A,B$ 成立。
+\end{proof}
+
+\subsection{低秩修正与 Schur 补}
+
+\begin{theorem}[对角矩阵加秩一矩阵]
+设
+\begin{equation}
+ D=\diag(a_1,\ldots,a_n)
+\end{equation}
+可逆，且
+\begin{equation}
+ 1+\ones^TD^{-1}\ones\neq0.
+\end{equation}
+则
+\begin{equation}
+ (D+\ones\ones^T)^{-1}
+ =D^{-1}-
+ \frac{D^{-1}\ones\ones^TD^{-1}}
+ {1+\ones^TD^{-1}\ones}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+将右端记为 $R$，直接计算
+\begin{equation}
+ (D+\ones\ones^T)R=I_n.
+\end{equation}
+这也是 Sherman--Morrison 公式的特例。
+\end{proof}
+
+\begin{theorem}[Schur 补与分块逆]
+设
+\begin{equation}
+ M=\begin{pmatrix}A&B\\ C&D\end{pmatrix},
+\end{equation}
+其中 $A$ 可逆，并记
+\begin{equation}
+ S=D-CA^{-1}B.
+\end{equation}
+则
+\begin{equation}
+ \begin{pmatrix}I&0\\-CA^{-1}&I\end{pmatrix}
+ M
+ \begin{pmatrix}I&-A^{-1}B\\0&I\end{pmatrix}
+ =\begin{pmatrix}A&0\\0&S\end{pmatrix}.
+\end{equation}
+因此 $M$ 可逆当且仅当 $S$ 可逆，并且
+\begin{equation}
+ M^{-1}=
+ \begin{pmatrix}
+ A^{-1}+A^{-1}BS^{-1}CA^{-1}&-A^{-1}BS^{-1}\\
+ -S^{-1}CA^{-1}&S^{-1}
+ \end{pmatrix}.
+\end{equation}
+\end{theorem}
+
+\begin{corollary}
+若 $M=M^T$ 且 $A$ 正定，则
+\begin{equation}
+ M\text{ 正定}
+ \quad\Longleftrightarrow\quad
+ S=D-B^TA^{-1}B\text{ 正定}.
+\end{equation}
+\end{corollary}
+
+\subsection{Vandermonde 矩阵的逆}
+
+令 $x_1,\ldots,x_n$ 两两不同，并取标准 Vandermonde 矩阵
+\begin{equation}
+ V=(x_i^{j-1})_{i,j=1}^n.
+\end{equation}
+定义 Lagrange 基函数
+\begin{equation}
+ \ell_i(t)=\prod_{k\neq i}\frac{t-x_k}{x_i-x_k}
+ =\sum_{j=1}^n c_{ji}t^{j-1}.
+\end{equation}
+由于 $\ell_i(x_k)=\delta_{ik}$，有
+\begin{equation}
+ V(c_{ji})_{j,i=1}^n=I_n.
+\end{equation}
+
+\begin{theorem}
+Vandermonde 矩阵的逆满足
+\begin{equation}
+ (V^{-1})_{ji}=[t^{j-1}]\ell_i(t),
+\end{equation}
+即第 $i$ 列由第 $i$ 个 Lagrange 基多项式的系数组成。显式地，
+\begin{equation}
+ (V^{-1})_{ji}
+ =\frac{(-1)^{n-j}
+ e_{n-j}(x_1,\ldots,\widehat{x_i},\ldots,x_n)}
+ {\prod_{k\neq i}(x_i-x_k)},
+\end{equation}
+其中 $e_k$ 是初等对称多项式，帽号表示删去该变量。
+\end{theorem}
+
+\begin{remark}[单位根情形]
+取
+\begin{equation}
+ \omega=\e^{-2\pi\ii/n},
+ \qquad
+ F=(\omega^{jk})_{j,k=0}^{n-1},
+\end{equation}
+则几何级数给出
+\begin{equation}
+ F^*F=nI_n,
+ \qquad
+ F^{-1}=\frac1nF^*.
+\end{equation}
+这正是 Vandermonde 逆在单位根节点上的特殊简化。
+\end{remark}
+
+\subsection{行列式交换恒等式与矩阵逆公式}
+
+\begin{theorem}[Sylvester 行列式恒等式]
+若 $A\in\F^{m\times n}$、$B\in\F^{n\times m}$，则
+\begin{equation}
+ \det(I_m+AB)=\det(I_n+BA).
+\end{equation}
+更一般地，作为关于 $\lambda$ 的多项式，
+\begin{equation}
+ \det(\lambda I_m-AB)
+ =\lambda^{m-n}\det(\lambda I_n-BA)
+\end{equation}
+在 $m\geq n$ 时成立；若 $m<n$，交换 $m,n$ 后理解该式。
+\end{theorem}
+
+\begin{proof}
+对分块矩阵
+\begin{equation}
+ \begin{pmatrix}I_m&A\\-B&I_n\end{pmatrix}
+\end{equation}
+分别以左上角和右下角作 Schur 补，即得第一式。第二式先在 $\lambda\neq0$ 时提出 $\lambda$ 并应用第一式，再由多项式恒等性延拓到所有 $\lambda$。
+\end{proof}
+
+\begin{corollary}
+$AB$ 与 $BA$ 的非零特征值连同代数重数完全相同。
+\end{corollary}
+
+\begin{proposition}[Neumann 级数]
+若某个次乘法矩阵范数满足 $\norm{A}<1$，则
+\begin{equation}
+ (I-A)^{-1}=I+A+A^2+\cdots,
+\end{equation}
+级数在该范数下绝对收敛。更一般地，只要谱半径 $\rho(A)<1$，该结论仍成立。
+\end{proposition}
+
+\begin{proposition}[推入恒等式]
+若相关逆存在，则
+\begin{equation}
+ (I-AB)^{-1}=I+A(I-BA)^{-1}B.
+\end{equation}
+等价地，
+\begin{equation}
+ (I-AB)^{-1}A=A(I-BA)^{-1}.
+\end{equation}
+\end{proposition}
+
+\begin{theorem}[Woodbury 公式]
+若各逆均存在，则
+\begin{equation}
+ (A+UCV)^{-1}
+ =A^{-1}-A^{-1}U
+ (C^{-1}+VA^{-1}U)^{-1}
+ VA^{-1}.
+\end{equation}
+当 $C=1$ 且 $U=u,V=v^T$ 时，得到 Sherman--Morrison 公式
+\begin{equation}
+ (A+uv^T)^{-1}
+ =A^{-1}-\frac{A^{-1}uv^TA^{-1}}
+ {1+v^TA^{-1}u}.
+\end{equation}
+\end{theorem}
+
+\subsection{DFT、循环矩阵与快速算法}
+
+取 $\omega=\e^{-2\pi\ii/n}$，离散 Fourier 矩阵为
+\begin{equation}
+ F=(\omega^{jk})_{j,k=0}^{n-1}.
+\end{equation}
+对向量 $x\in\C^n$，其离散 Fourier 变换和逆变换分别为
+\begin{equation}
+ \widehat{x}=Fx,
+ \qquad
+ x=\frac1nF^*\widehat{x}.
+\end{equation}
+
+\begin{theorem}[循环矩阵的对角化]
+设 $C$ 的第一列为 $c=(c_0,\ldots,c_{n-1})^T$，其余列由循环移位得到。则
+\begin{equation}
+ C=F^{-1}\diag(Fc)F.
+\end{equation}
+因此循环卷积满足卷积定理
+\begin{equation}
+ F(x\ast y)=(Fx)\odot(Fy),
+\end{equation}
+其中 $\odot$ 表示逐分量乘积。
+\end{theorem}
+
+\begin{proof}
+Fourier 向量
+\begin{equation}
+ v_k=(1,\omega^k,\omega^{2k},\ldots,\omega^{(n-1)k})^T
+\end{equation}
+是每个循环移位算子的特征向量，因而也是任意循环矩阵的特征向量。相应特征值正是 $Fc$ 的各分量。
+\end{proof}
+
+\begin{remark}
+直接计算 DFT 需要 $O(n^2)$ 次运算。快速 Fourier 变换利用 $n$ 的因子分解递归拆分偶、奇指标，将复杂度降为 $O(n\log n)$。把单位根换成有限域中的适当本原根便得到数论变换，可用于避免浮点误差的多项式乘法。
+\end{remark}

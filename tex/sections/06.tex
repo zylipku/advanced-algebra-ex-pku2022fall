@@ -1,0 +1,260 @@
+\section{习题课 \#6（10月18日）}
+
+\subsection{Gram 矩阵与秩}
+
+\begin{theorem}
+设 $A\in\R^{m\times n}$。则
+\begin{equation}
+ \rank(A^TA)=\rank(AA^T)=\rank A.
+\end{equation}
+更一般地，若 $A\in\C^{m\times n}$，则
+\begin{equation}
+ \rank(A^*A)=\rank(AA^*)=\rank A.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+对实矩阵，若 $A^TAx=0$，则
+\begin{equation}
+ 0=x^TA^TAx=\norm{Ax}_2^2,
+\end{equation}
+从而 $Ax=0$。反向包含显然成立，因此
+\begin{equation}
+ \Ker(A^TA)=\Ker A.
+\end{equation}
+由秩--零化度公式得到
+\begin{equation}
+ \rank(A^TA)=\rank A.
+\end{equation}
+对 $A^T$ 应用同一结论，并使用 $\rank A^T=\rank A$，得到
+\begin{equation}
+ \rank(AA^T)=\rank A.
+\end{equation}
+复数情形将 $T$ 换为共轭转置 $*$ 即可。
+\end{proof}
+
+\begin{remark}
+上述结论依赖于正定内积。若只在一般域上使用转置，结论可能失败。例如在含有非零平方和为零的域中，可以有非零列向量 $u$ 满足 $u^Tu=0$，于是 $A=u$ 时 $A^TA=0$，但 $\rank A=1$。
+\end{remark}
+
+\begin{proposition}
+设 $A\in\R^{m\times n}$。则
+\begin{equation}
+ \rank(AA^T)=\rank(A^TAA^T)=\rank(A^TAA^TA^T)=\cdots=\rank A.
+\end{equation}
+复数情形同样成立，只需把转置换为共轭转置。
+\end{proposition}
+
+\begin{proof}
+每一步都可写成某个矩阵 $C$ 的 $CC^T$ 或 $C^TC$，并应用上一结论。
+\end{proof}
+
+\subsection{矩阵乘积秩等号的判别}
+
+设
+\begin{equation}
+ A\in\F^{m\times n},
+ \qquad
+ B\in\F^{n\times p}.
+\end{equation}
+总有
+\begin{equation}
+ \rank(AB)\leq\min\{\rank A,\rank B\}.
+\end{equation}
+原稿进一步给出了等号成立的精确条件。
+
+\begin{theorem}
+有
+\begin{equation}
+ \rank(AB)=\rank A
+ \quad\Longleftrightarrow\quad
+ \Ker A+\Image B=\F^n.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+由于
+\begin{equation}
+ \Image(AB)=A(\Image B)\subseteq\Image A,
+\end{equation}
+等号成立当且仅当每个 $Ay$ 都可写成 $ABz$。这等价于对每个 $y\in\F^n$，存在 $z$ 使
+\begin{equation}
+ A(y-Bz)=0,
+\end{equation}
+也就是
+\begin{equation}
+ y\in\Ker A+\Image B.
+\end{equation}
+\end{proof}
+
+\begin{theorem}
+有
+\begin{equation}
+ \rank(AB)=\rank B
+ \quad\Longleftrightarrow\quad
+ \Ker A\cap\Image B=\{0\}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+把 $A$ 限制在 $\Image B$ 上。映射
+\begin{equation}
+ A|_{\Image B}:\Image B\longrightarrow\Image(AB)
+\end{equation}
+是满射，其核为
+\begin{equation}
+ \Ker A\cap\Image B.
+\end{equation}
+由秩--零化度公式，
+\begin{equation}
+ \rank B=\rank(AB)+\dim(\Ker A\cap\Image B).
+\end{equation}
+结论随即得到。
+\end{proof}
+
+\begin{corollary}
+设矩阵乘法的尺寸相容。
+\begin{enumerate}
+  \item 若 $\rank(AB)=\rank A$，则对任意 $C$，
+  \begin{equation}
+   \rank(ABC)=\rank(AC)
+  \end{equation}
+  并不自动成立，但若 $\Image C+\Ker(AB)$ 与相应空间满足上一判别，则可逐层判断。
+  \item 若 $\rank(AB)=\rank B$，则 $A$ 在 $\Image B$ 上单射。因而对任意 $C$，
+  \begin{equation}
+   \rank(ABC)=\rank(BC).
+  \end{equation}
+  \item 若 $\rank(AB)=\rank A=\rank B$，则 $A$ 在 $\Image B$ 上给出同构
+  \begin{equation}
+   \Image B\cong\Image A.
+  \end{equation}
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}
+两个判别式分别描述乘法中可能损失秩的两种机制。右乘 $B$ 后若不能覆盖 $A$ 所需要的全部输入方向，则无法达到 $\rank A$；左乘 $A$ 后若 $\Image B$ 中存在落入 $\Ker A$ 的非零方向，则会损失 $\rank B$。
+\end{remark}
+
+\subsection{幂的像空间与零空间}
+
+设 $A\in\F^{n\times n}$。显然有降链
+\begin{equation}
+ \F^n\supseteq\Image A\supseteq\Image A^2\supseteq\cdots
+\end{equation}
+和升链
+\begin{equation}
+ \{0\}\subseteq\Ker A\subseteq\Ker A^2\subseteq\cdots.
+\end{equation}
+
+\begin{theorem}[稳定性]
+若对某个 $k\geq0$ 有
+\begin{equation}
+ \Image A^k=\Image A^{k+1},
+\end{equation}
+则对所有 $j\geq k$，
+\begin{equation}
+ \Image A^j=\Image A^k.
+\end{equation}
+同样地，若
+\begin{equation}
+ \Ker A^k=\Ker A^{k+1},
+\end{equation}
+则对所有 $j\geq k$，
+\begin{equation}
+ \Ker A^j=\Ker A^k.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+若 $\Image A^k=\Image A^{k+1}$，在两边作用 $A$ 得
+\begin{equation}
+ \Image A^{k+1}=\Image A^{k+2},
+\end{equation}
+迭代即可。
+
+对零空间，设 $x\in\Ker A^{k+2}$。则 $Ax\in\Ker A^{k+1}=\Ker A^k$，所以
+\begin{equation}
+ A^{k+1}x=0,
+\end{equation}
+即 $x\in\Ker A^{k+1}$。反向包含本来就成立，故下一层也稳定，继而归纳。
+\end{proof}
+
+\begin{theorem}
+对每个 $k\geq0$，下列条件等价：
+\begin{enumerate}
+  \item $\Image A^k=\Image A^{k+1}$；
+  \item $\Ker A^k=\Ker A^{k+1}$；
+  \item $\rank A^k=\rank A^{k+1}$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+像空间有包含关系，维数相等即集合相等；零空间同理。又由
+\begin{equation}
+ \dim\Ker A^k=n-\rank A^k
+\end{equation}
+可知两种维数稳定等价。
+\end{proof}
+
+\begin{definition}
+最小的非负整数 $k$，使
+\begin{equation}
+ \rank A^k=\rank A^{k+1},
+\end{equation}
+称为 $A$ 的指数，常记为 $\operatorname{ind}(A)$。有限维性保证该整数存在且不超过 $n$。
+\end{definition}
+
+\begin{remark}
+若 $k=\operatorname{ind}(A)$，则
+\begin{equation}
+ \F^n=\Image A^k\oplus\Ker A^k.
+\end{equation}
+事实上两者维数之和为 $n$，而若 $x=A^ky$ 同时满足 $A^kx=0$，则 $A^{2k}y=0$。稳定性给出 $\Ker A^{2k}=\Ker A^k$，故 $x=A^ky=0$。
+\end{remark}
+
+\subsection{单侧逆与满秩}
+
+\begin{theorem}
+设 $A\in\F^{m\times n}$。
+\begin{enumerate}
+  \item $A$ 满行秩，即 $\rank A=m$，当且仅当存在 $D\in\F^{n\times m}$ 使
+  \begin{equation}
+   AD=I_m.
+  \end{equation}
+  此时 $D$ 称为 $A$ 的右逆。
+  \item $A$ 满列秩，即 $\rank A=n$，当且仅当存在 $C\in\F^{n\times m}$ 使
+  \begin{equation}
+   CA=I_n.
+  \end{equation}
+  此时 $C$ 称为 $A$ 的左逆。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+若 $A$ 满行秩，则线性映射 $A:\F^n\to\F^m$ 满射。对标准基 $e_1,\ldots,e_m$ 分别选取 $d_j$ 满足 $Ad_j=e_j$，令
+\begin{equation}
+ D=(d_1,\ldots,d_m),
+\end{equation}
+便有 $AD=I_m$。反之，$AD=I_m$ 给出
+\begin{equation}
+ m=\rank I_m\leq\rank A\leq m.
+\end{equation}
+左逆的情形可对转置使用同一论证，或把单射映射延拓为一组基后直接构造。
+\end{proof}
+
+\begin{center}
+\begin{tabular}{p{0.43\textwidth}p{0.43\textwidth}}
+\toprule
+满行秩 $\rank A=m$ & 满列秩 $\rank A=n$\\
+\midrule
+行向量线性无关 & 列向量线性无关\\
+$\Image A=\F^m$ & $\Ker A=\{0\}$\\
+对每个 $b$，$Ax=b$ 有解 & 对每个 $b$，$Ax=b$ 至多一解\\
+存在右逆 $D$，使 $AD=I_m$ & 存在左逆 $C$，使 $CA=I_n$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}
+当 $m=n$ 时，左逆、右逆、满行秩、满列秩和可逆性全部等价，而且左逆与右逆必相同。矩形矩阵则可能只有一种单侧逆。
+\end{remark}

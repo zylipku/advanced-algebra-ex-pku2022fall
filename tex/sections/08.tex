@@ -1,0 +1,282 @@
+\section{习题课 \#8（11月1日）}
+
+\subsection{Gram--Schmidt 正交化}
+
+设 $V$ 是实或复内积空间，$\alpha_1,\ldots,\alpha_s$ 线性无关。Gram--Schmidt 过程递归定义
+\begin{align}
+ \widetilde\beta_1&=\alpha_1,
+ &\beta_1&=\frac{\widetilde\beta_1}{\norm{\widetilde\beta_1}},\\
+ \widetilde\beta_k&=\alpha_k-
+ \sum_{j=1}^{k-1}\inner{\beta_j}{\alpha_k}\beta_j,
+ &\beta_k&=\frac{\widetilde\beta_k}{\norm{\widetilde\beta_k}},
+ \qquad k=2,\ldots,s.
+\end{align}
+复内积取第一变量共轭线性、第二变量线性时，应按所采用的约定相应调整内积次序。
+
+\begin{theorem}
+上述过程满足
+\begin{equation}
+ \inner{\beta_i}{\beta_j}=\delta_{ij},
+ \qquad
+ \Span(\beta_1,\ldots,\beta_k)
+ =\Span(\alpha_1,\ldots,\alpha_k)
+\end{equation}
+对每个 $k$ 成立。因此 $\beta_1,\ldots,\beta_s$ 是与原向量组张成同一子空间的一组标准正交基。
+\end{theorem}
+
+\begin{proof}
+$\widetilde\beta_k$ 是从 $\alpha_k$ 中减去其在此前标准正交向量上的投影，故与 $\beta_1,\ldots,\beta_{k-1}$ 正交。若 $\widetilde\beta_k=0$，则 $\alpha_k$ 属于前 $k-1$ 个向量的张成空间，与线性无关矛盾。归一化后即得结论。
+\end{proof}
+
+\begin{remark}[由坐标变换诱导的内积]
+若 $A=(\alpha_1,\ldots,\alpha_n)$ 可逆，向量 $x$ 表示在基 $\alpha_1,\ldots,\alpha_n$ 下的坐标，则
+\begin{equation}
+ \norm{Ax}_2^2=x^TA^TAx,
+ \qquad
+ \inner{Ax}{Ay}=x^TA^TAy.
+\end{equation}
+因此 $A^TA$ 是这组基对应的 Gram 矩阵。距离与夹角都可在坐标空间中通过该正定矩阵计算。
+\end{remark}
+
+\subsection{QR 分解}
+
+\begin{theorem}[薄 QR 分解]
+设 $A\in\R^{m\times n}$，$m\geq n$，且 $A$ 满列秩。则存在
+\begin{equation}
+ Q\in\R^{m\times n},
+ \qquad
+ R\in\R^{n\times n}
+\end{equation}
+使
+\begin{equation}
+ A=QR,
+ \qquad Q^TQ=I_n,
+\end{equation}
+并且 $R$ 为对角元全正的上三角矩阵。这样的分解唯一。
+\end{theorem}
+
+\begin{proof}
+对 $A$ 的列向量作 Gram--Schmidt 正交化，把所得标准正交向量作为 $Q$ 的列。每个原列都由当前及此前的 $Q$ 列线性表示，故系数矩阵 $R$ 为上三角；其对角元是未归一化残差的范数，因而为正。
+
+若 $A=Q_1R_1=Q_2R_2$ 都满足条件，则
+\begin{equation}
+ Q_2^TQ_1=R_2R_1^{-1}.
+\end{equation}
+左端是正交矩阵，右端是对角元全正的上三角矩阵。唯一可能是恒等矩阵，故 $Q_1=Q_2$、$R_1=R_2$。
+\end{proof}
+
+\begin{remark}
+若 $A$ 只有秩 $r<n$，仍可对一组极大无关列作薄 QR 分解，但不再能要求一个 $n\times n$ 的 $R$ 对角元全非零。数值计算中常配合列主元选取写成
+\begin{equation}
+ A\Pi=QR.
+\end{equation}
+\end{remark}
+
+\subsection{最小二乘问题}
+
+考虑
+\begin{equation}
+ \min_{x\in\R^n}\norm{Ax-b}_2,
+ \qquad A\in\R^{m\times n}.
+\end{equation}
+
+\begin{theorem}[正规方程]
+向量 $\widehat x$ 是最小二乘解当且仅当
+\begin{equation}
+ A^T(A\widehat x-b)=0,
+\end{equation}
+即
+\begin{equation}
+ A^TA\widehat x=A^Tb.
+\end{equation}
+若 $A$ 满列秩，则解唯一，并且
+\begin{equation}
+ \widehat x=(A^TA)^{-1}A^Tb.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+最小值处残差 $r=b-A\widehat x$ 必与 $\Image A$ 正交，故 $A^Tr=0$。反之，若 $A^Tr=0$，则对任意 $x$，
+\begin{equation}
+ \norm{Ax-b}_2^2
+ =\norm{A(x-\widehat x)-r}_2^2
+ =\norm{A(x-\widehat x)}_2^2+\norm r_2^2,
+\end{equation}
+所以 $\widehat x$ 确为最小点。
+\end{proof}
+
+\begin{corollary}[QR 求解]
+若 $A=QR$ 是薄 QR 分解，则
+\begin{equation}
+ \widehat x=R^{-1}Q^Tb,
+\end{equation}
+并且最小残差平方为
+\begin{equation}
+ \norm b_2^2-\norm{Q^Tb}_2^2.
+\end{equation}
+正交投影到 $\Image A$ 的矩阵为
+\begin{equation}
+ P=QQ^T=A(A^TA)^{-1}A^T.
+\end{equation}
+\end{corollary}
+
+\subsection{秩不等式汇总}
+
+对尺寸相容的矩阵，有以下常用估计：
+\begin{align}
+ \rank(A+B)&\leq\rank A+\rank B,\\
+ \rank(A,B)&\leq\rank A+\rank B,\\
+ \rank\begin{pmatrix}A\\B\end{pmatrix}
+ &\leq\rank A+\rank B,\\
+ \rank(AB)&\leq\min\{\rank A,\rank B\},\\
+ \rank(AB)&\geq\rank A+\rank B-n,\\
+ \rank(ABC)&\geq\rank(AB)+\rank(BC)-\rank B.
+\end{align}
+最后一条称为 Frobenius 秩不等式。
+
+\begin{proof}[Frobenius 不等式的证明]
+取 $B=P\begin{psmallmatrix}I_r&0\\0&0\end{psmallmatrix}Q$ 的秩标准形，把外侧可逆矩阵吸收到 $A,C$ 中。此时 $AB$ 只依赖 $A$ 的前 $r$ 列，$BC$ 只依赖 $C$ 的前 $r$ 行，而 $ABC$ 是这两个截取矩阵的乘积。对它们应用 Sylvester 秩不等式即得
+\begin{equation}
+ \rank(ABC)\geq\rank(AB)+\rank(BC)-r.
+\end{equation}
+这里 $r=\rank B$。
+\end{proof}
+
+\begin{exercise}
+设同阶方阵满足
+\begin{equation}
+ A+B=AB.
+\end{equation}
+证明 $A$ 与 $B$ 可交换，并写出它们与 $I$ 的关系。
+\end{exercise}
+
+\begin{solution}
+原式等价于
+\begin{equation}
+ (I-A)(I-B)=I.
+\end{equation}
+方阵的右逆也是左逆，故
+\begin{equation}
+ (I-B)(I-A)=I.
+\end{equation}
+展开得
+\begin{equation}
+ A+B=BA.
+\end{equation}
+与已知式比较可知 $AB=BA$，并且 $I-A$ 与 $I-B$ 互为逆矩阵。
+\end{solution}
+
+\subsection{Gram 行列式与分块估计}
+
+设 $A=(B,C)$，其中 $B$、$C$ 分别由一部分列组成。Gram 矩阵为
+\begin{equation}
+ A^TA=\begin{pmatrix}
+ B^TB&B^TC\\
+ C^TB&C^TC
+\end{pmatrix}.
+\end{equation}
+
+\begin{theorem}[Gram--Hadamard/Fischer 型不等式]
+有
+\begin{equation}
+ \det(A^TA)
+ \leq\det(B^TB)\det(C^TC).
+\end{equation}
+若 $B,C$ 均满列秩，则等号成立当且仅当
+\begin{equation}
+ B^TC=0,
+\end{equation}
+即两个列空间正交。
+\end{theorem}
+
+\begin{proof}
+若 $B$ 满列秩，对左上角作 Schur 补：
+\begin{equation}
+ \det(A^TA)
+ =\det(B^TB)
+ \det\bigl(C^TC-C^TB(B^TB)^{-1}B^TC\bigr).
+\end{equation}
+括号中等于
+\begin{equation}
+ C^T(I-P_B)C,
+ \qquad
+ P_B=B(B^TB)^{-1}B^T,
+\end{equation}
+且满足
+\begin{equation}
+ 0\preccurlyeq C^T(I-P_B)C\preccurlyeq C^TC.
+\end{equation}
+比较特征值乘积即得不等式。退化情形可由连续性得到。
+\end{proof}
+
+\subsection{内积空间中的基本不等式}
+
+\begin{theorem}[勾股定理]
+若 $\alpha\perp\beta$，则
+\begin{equation}
+ \norm{\alpha+\beta}^2=\norm\alpha^2+\norm\beta^2.
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Cauchy--Schwarz 不等式]
+对任意 $\alpha,\beta$，
+\begin{equation}
+ \abs{\inner\alpha\beta}\leq\norm\alpha\,\norm\beta.
+\end{equation}
+等号成立当且仅当 $\alpha,\beta$ 线性相关。
+\end{theorem}
+
+\begin{proof}
+若 $\beta\neq0$，考虑
+\begin{equation}
+ 0\leq\norm{\alpha-t\beta}^2.
+\end{equation}
+在实数情形取
+\begin{equation}
+ t=\frac{\inner\beta\alpha}{\norm\beta^2},
+\end{equation}
+在复数情形取相应的正交投影系数，即得
+\begin{equation}
+ 0\leq\norm\alpha^2-
+ \frac{\abs{\inner\alpha\beta}^2}{\norm\beta^2}.
+\end{equation}
+\end{proof}
+
+\begin{corollary}[三角不等式]
+\begin{equation}
+ \norm{\alpha+\beta}\leq\norm\alpha+\norm\beta.
+\end{equation}
+\end{corollary}
+
+\subsection{平行四边形法则与极化恒等式}
+
+\begin{theorem}[平行四边形法则]
+内积诱导的范数满足
+\begin{equation}
+ \norm{\alpha+\beta}^2+\norm{\alpha-\beta}^2
+ =2\bigl(\norm\alpha^2+\norm\beta^2\bigr).
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[极化恒等式]
+在实内积空间中，
+\begin{equation}
+ \inner\alpha\beta
+ =\frac14\left(
+ \norm{\alpha+\beta}^2-\norm{\alpha-\beta}^2
+ \right).
+\end{equation}
+在复内积空间中，若内积对第二个变量线性，则
+\begin{equation}
+ \inner\alpha\beta
+ =\frac14\left(
+ \norm{\alpha+\beta}^2-\norm{\alpha-\beta}^2
+ -\ii\norm{\alpha+\ii\beta}^2
+ +\ii\norm{\alpha-\ii\beta}^2
+ \right).
+\end{equation}
+\end{theorem}
+
+\begin{remark}
+平行四边形法则不仅是内积范数的必要条件，也是充分条件。一个范数满足该法则时，可由极化公式恢复唯一的内积。
+\end{remark}

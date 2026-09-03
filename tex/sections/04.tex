@@ -1,0 +1,184 @@
+\section{习题课 \#4（10月4日）}
+
+\subsection{由张成空间得到的预序与秩函数}
+
+记 $\mathcal P_{\mathrm{fin}}(\F^n)$ 为 $\F^n$ 的有限子集全体。对有限集 $A$ 定义
+\begin{equation}
+ \Span A=\left\{\sum_{k=1}^r c_k a_k:
+ r<\infty,
+ \ c_k\in\F,
+ \ a_k\in A\right\}.
+\end{equation}
+
+\begin{lemma}
+有限集 $A$ 中每个向量均可由 $B$ 线性表出，当且仅当
+\begin{equation}
+ \Span A\subseteq\Span B.
+\end{equation}
+\end{lemma}
+
+因此可定义
+\begin{equation}
+ A\preccurlyeq B
+ \quad\Longleftrightarrow\quad
+ \Span A\subseteq\Span B.
+\end{equation}
+该关系自反且传递，但一般不反对称，所以只是预序。再定义
+\begin{equation}
+ A\sim B
+ \quad\Longleftrightarrow\quad
+ \Span A=\Span B,
+\end{equation}
+则商集上的 $\preccurlyeq$ 成为偏序。
+
+\begin{definition}
+有限向量组 $A$ 的秩定义为其中线性无关子组的最大基数：
+\begin{equation}
+ \rank A=\
+ \max\{\abs{S}:S\subseteq A,\ S\text{ 线性无关}\}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+若 $A\preccurlyeq B$，则
+\begin{equation}
+ \rank A\leq\rank B.
+\end{equation}
+若 $A\sim B$，则 $\rank A=\rank B$。在 $\F^n$ 中，张成整个空间的向量组秩为 $n$。
+\end{proposition}
+
+\begin{remark}
+不能把 $A\preccurlyeq B$ 直接推出 $|A|\leq|B|$，因为一个向量组可含大量冗余向量。把基数替换为秩后，单调性才成立。
+\end{remark}
+
+\subsection{矩阵的行秩与列秩}
+
+\begin{theorem}
+任意矩阵的行秩等于列秩。二者共同记为 $\rank A$。
+\end{theorem}
+
+\begin{proof}
+初等行变换不改变行空间的维数，同时由左乘可逆矩阵实现，因而不改变列向量之间的线性关系。将 $A$ 化为行阶梯形后，非零行数既等于行秩，也等于主元列数，即列秩。
+\end{proof}
+
+\begin{proposition}[由解集包含推出行向量包含]
+设 $B\in\F^{r\times n}$，$c^T\in\F^{1\times n}$。若每个满足 $Bx=0$ 的向量也满足 $c^Tx=0$，即
+\begin{equation}
+ \Ker B\subseteq\Ker c^T,
+\end{equation}
+则 $c^T$ 是 $B$ 的行向量的线性组合。
+\end{proposition}
+
+\begin{proof}
+把 $c^T$ 添在 $B$ 的末行。假设添行后秩增加，则齐次系统的零空间维数下降，从而存在 $x\in\Ker B$ 但 $c^Tx\neq0$，矛盾。因此添行不增秩，故 $c^T$ 属于 $B$ 的行空间。
+\end{proof}
+
+\subsection{向量组秩的基本估计}
+
+设
+\begin{equation}
+ A=(\alpha_1,\ldots,\alpha_s),
+ \qquad
+ B=(\beta_1,\ldots,\beta_t).
+\end{equation}
+则有
+\begin{align}
+ \rank A&\leq n,\\
+ \rank B&\leq n,\\
+ \rank(A,B)&\leq\rank A+\rank B,\\
+ \rank(A,\beta)&\leq\rank A+1.
+\end{align}
+并且
+\begin{equation}
+ \rank(A,B)=\rank A
+ \quad\Longleftrightarrow\quad
+ \beta_j\in\Span A\quad(j=1,\ldots,t).
+\end{equation}
+
+\begin{exercise}[参数矩阵的秩与极大无关列组]
+讨论
+\begin{equation}
+ A(\lambda)=
+ \begin{pmatrix}
+ 1&\lambda&-1&2\\
+ 2&-1&\lambda&5\\
+ 1&10&-6&1
+ \end{pmatrix}
+\end{equation}
+的秩，并给出一组极大线性无关列。
+\end{exercise}
+
+\begin{solution}
+以第一行为主元行，作
+\begin{equation}
+ R_2\leftarrow R_2-2R_1,
+ \qquad
+ R_3\leftarrow R_3-R_1.
+\end{equation}
+继续消元后，控制秩下降的因子为
+\begin{equation}
+ (\lambda+5)(\lambda-3).
+\end{equation}
+于是
+\begin{enumerate}
+  \item 当 $\lambda=3$ 时，$\rank A=2$，第 $1,2$ 列构成极大无关列组；
+  \item 当 $\lambda=-5$ 时，$\rank A=3$，可取第 $1,2,4$ 列；
+  \item 当 $\lambda\neq3,-5$ 时，$\rank A=3$，可取第 $1,2,3$ 列。
+\end{enumerate}
+特别地，$\lambda=10$ 虽使中间某个消元分母为零，但直接换主元后仍属第三种情形。
+\end{solution}
+
+\begin{proposition}[截取若干行或列后的秩下界]
+设 $A\in\F^{m\times n}$ 且 $\rank A=r$。令 $A_s$ 为 $A$ 的前 $s$ 行组成的子矩阵，则
+\begin{equation}
+ \rank A_s\geq r+s-m.
+\end{equation}
+类似地，若 $B_s$ 为前 $s$ 列组成的子矩阵，则
+\begin{equation}
+ \rank B_s\geq r+s-n.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+其余 $m-s$ 行每加入一行至多使秩增加 $1$，故
+\begin{equation}
+ r=\rank A\leq\rank A_s+(m-s).
+\end{equation}
+移项即得。列的情形完全相同。
+\end{proof}
+
+\begin{example}[数值矩阵的消元]
+原稿给出一个 $4\times5$ 的整数矩阵，并逐行消元。化为阶梯形后恰有三个主元，因此矩阵秩为 $3$，第 $1,2,3$ 列构成一个极大线性无关列组。此类题的要点不是保留每一步大整数运算，而是同时记录主元位置，避免在消元后误把新矩阵的列直接当作原矩阵的列。
+\end{example}
+
+\subsection{常上、下三角 Toeplitz 矩阵的秩}
+
+考虑
+\begin{equation}
+ T_n(a,b,c)=
+ \begin{pmatrix}
+ a&b&\cdots&b\\
+ c&a&\cdots&b\\
+ \vdots&\vdots&\ddots&\vdots\\
+ c&c&\cdots&a
+ \end{pmatrix}.
+\end{equation}
+由上一讲的计算，
+\begin{equation}
+ \det T_n=
+ \begin{cases}
+ (a-b)^{n-1}\bigl(a+(n-1)b\bigr),&b=c,\\[0.4em]
+ \displaystyle\frac{b(a-c)^n-c(a-b)^n}{b-c},&b\neq c.
+ \end{cases}
+\end{equation}
+因此先由 $\det T_n$ 判断是否满秩；若行列式为零，再检查一个 $(n-1)$ 阶主子式即可区分秩 $n-1$ 与更低的情形。
+
+原稿特别列出了以下退化情形：
+\begin{enumerate}
+  \item 若 $a=b=c\neq0$，则所有列相同，$\rank T_n=1$，任一列均为极大无关列组；
+  \item 若 $b=c\neq0$ 且 $a=(1-n)b$，则 $\rank T_n=n-1$，前 $n-1$ 列可取为极大无关列组；
+  \item 若 $a=b=c=0$，则 $\rank T_n=0$；
+  \item 若 $a=c=0$ 且 $b\neq0$，则 $T_n$ 为严格上三角常数矩阵，$\rank T_n=n-1$，后 $n-1$ 列线性无关；
+  \item 对称地，若 $a=b=0$ 且 $c\neq0$，则 $\rank T_n=n-1$，前 $n-1$ 列线性无关。
+\end{enumerate}
+其余情形可直接结合 $\det T_n$ 与相邻阶行列式判定。

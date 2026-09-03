@@ -1,0 +1,326 @@
+\section{习题课 \#11（11月22日）}
+
+\subsection{正规矩阵与谱定理}
+
+在复数域上，用 $A^*$ 表示共轭转置。
+
+\begin{definition}
+矩阵 $A\in\C^{n\times n}$ 称为正规矩阵，如果
+\begin{equation}
+ A^*A=AA^*.
+\end{equation}
+Hermite 矩阵、酉矩阵和复数域上的对角矩阵都是正规矩阵。
+\end{definition}
+
+\begin{theorem}[正规矩阵谱定理]
+矩阵 $A\in\C^{n\times n}$ 正规，当且仅当存在酉矩阵 $U$ 与对角矩阵 $D$ 使
+\begin{equation}
+ A=UDU^*.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+若 $A=UDU^*$，则
+\begin{equation}
+ A^*A=U D^*D U^*=U DD^*U^*=AA^*.
+\end{equation}
+
+反之，由 Schur 分解，存在酉矩阵 $U$ 使
+\begin{equation}
+ T=U^*AU
+\end{equation}
+为上三角矩阵。正规性在酉相似下保持，所以 $T$ 正规。比较 $T^*T$ 与 $TT^*$ 的第一个对角元可知第一行非对角元素全为零，再对右下角子块归纳，得到 $T$ 必为对角矩阵。
+\end{proof}
+
+\begin{corollary}[Hermite 与实对称谱定理]
+\begin{enumerate}
+  \item 若 $A=A^*$，则 $A$ 的所有特征值均为实数，且可酉对角化；
+  \item 若 $A\in\R^{n\times n}$ 且 $A=A^T$，则存在实正交矩阵 $Q$ 使
+  \begin{equation}
+   A=QDQ^T,
+  \end{equation}
+  其中 $D$ 为实对角矩阵。
+\end{enumerate}
+\end{corollary}
+
+\begin{theorem}[不同特征值的特征向量正交]
+若 $A$ 正规，且
+\begin{equation}
+ Ax=\lambda x,
+ \qquad
+ Ay=\mu y,
+ \qquad
+ \lambda\neq\mu,
+\end{equation}
+则
+\begin{equation}
+ x^*y=0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+谱定理给出一组标准正交特征向量基，不同特征值对应的特征空间由互不相交的基向量子集张成，故彼此正交。也可利用正规矩阵满足
+\begin{equation}
+ \Ker(A-\lambda I)=\Ker(A^*-\overline\lambda I)
+\end{equation}
+直接计算。
+\end{proof}
+
+\subsection{实矩阵在实数域与复数域上的相似性}
+
+\begin{theorem}
+设 $A,B\in\R^{n\times n}$。则 $A$ 与 $B$ 在 $\R$ 上相似，当且仅当它们在 $\C$ 上相似。
+\end{theorem}
+
+\begin{proof}
+实相似显然蕴含复相似。反之，假设存在复可逆矩阵
+\begin{equation}
+ S=P+\ii Q,
+ \qquad P,Q\in\R^{n\times n},
+\end{equation}
+使
+\begin{equation}
+ AS=SB.
+\end{equation}
+比较实部与虚部得到
+\begin{equation}
+ AP=PB,
+ \qquad
+ AQ=QB.
+\end{equation}
+因此对每个 $t\in\R$，
+\begin{equation}
+ A(P+tQ)=(P+tQ)B.
+\end{equation}
+多项式 $p(t)=\det(P+tQ)$ 不恒为零，因为 $p(\ii)=\det(P+\ii Q)\neq0$。它在实数轴上只有有限多个零点，所以可选 $t\in\R$ 使 $P+tQ$ 可逆，从而得到实相似变换。
+\end{proof}
+
+\subsection{由一个矩阵生成的多项式代数}
+
+\begin{definition}
+对 $A\in\F^{n\times n}$，定义
+\begin{equation}
+ \F[A]=\set{f(A):f\in\F[t]},
+\end{equation}
+并定义 $A$ 的中心化子
+\begin{equation}
+ \mathcal C(A)=\set{B\in\F^{n\times n}:AB=BA}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+$\F[A]$ 与 $\mathcal C(A)$ 都是 $\F^{n\times n}$ 的线性子空间，并且
+\begin{equation}
+ \F[A]\subseteq\mathcal C(A).
+\end{equation}
+若 $B\in\mathcal C(A)$，则
+\begin{equation}
+ \F[B]\subseteq\mathcal C(A).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+若 $AB=BA$，则归纳可得 $AB^k=B^kA$，继而 $A$ 与任意 $B$ 的多项式可交换。取 $B=A$ 即得第一项包含关系。
+\end{proof}
+
+\begin{proposition}[正定平方根是多项式]
+设 $B\in\R^{n\times n}$ 为实对称正定矩阵。则存在多项式 $p$，使
+\begin{equation}
+ B^{1/2}=p(B),
+\end{equation}
+其中 $B^{1/2}$ 是唯一的实对称正定平方根。因此，若 $AB=BA$，则
+\begin{equation}
+ AB^{1/2}=B^{1/2}A.
+\end{equation}
+同理，$B^{-1/2}$ 也可写成 $B$ 的多项式。
+\end{proposition}
+
+\begin{proof}
+设 $B$ 的互异特征值为 $\lambda_1,\ldots,\lambda_s>0$。由 Lagrange 插值，可取多项式 $p$ 满足
+\begin{equation}
+ p(\lambda_j)=\sqrt{\lambda_j},
+ \qquad j=1,\ldots,s.
+\end{equation}
+若 $B=Q\diag(\lambda_1',\ldots,\lambda_n')Q^T$，则
+\begin{equation}
+ p(B)=Q\diag(\sqrt{\lambda_1'},\ldots,\sqrt{\lambda_n'})Q^T=B^{1/2}.
+\end{equation}
+\end{proof}
+
+\begin{remark}
+矩阵的三个常见分类关系分别为
+\begin{equation}
+ B=PAQ\quad\text{（等价）},
+\end{equation}
+\begin{equation}
+ B=P^{-1}AP\quad\text{（相似）},
+\end{equation}
+以及
+\begin{equation}
+ B=P^TAP\quad\text{（合同）}.
+\end{equation}
+它们分别对应一般线性映射、线性变换和双线性型或二次型的换基。典型标准形分别由秩、Jordan 或有理标准形、以及惯性指数描述。
+\end{remark}
+
+\subsection{Fibonacci 数列的矩阵解法}
+
+设
+\begin{equation}
+ a_0=0,
+ \qquad a_1=1,
+ \qquad a_{n+2}=a_{n+1}+a_n.
+\end{equation}
+令
+\begin{equation}
+ \alpha_n=\begin{pmatrix}a_{n+1}\\a_n\end{pmatrix},
+ \qquad
+ M=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\end{equation}
+则
+\begin{equation}
+ \alpha_{n+1}=M\alpha_n,
+ \qquad
+ \alpha_n=M^n\alpha_0.
+\end{equation}
+
+矩阵 $M$ 的特征值为
+\begin{equation}
+ \varphi=\frac{1+\sqrt5}{2},
+ \qquad
+ \psi=\frac{1-\sqrt5}{2}=-\varphi^{-1}.
+\end{equation}
+对角化后得到 Binet 公式
+\begin{equation}
+ a_n=\frac{\varphi^n-\psi^n}{\sqrt5}.
+\end{equation}
+该方法同时说明递推数列、矩阵幂和特征值之间的直接联系。
+
+\subsection{诱导矩阵二范数与谱半径}
+
+\begin{definition}
+对 $A\in\C^{m\times n}$，诱导二范数定义为
+\begin{equation}
+ \norm{A}_2
+ =\sup_{x\neq0}\frac{\norm{Ax}_2}{\norm x_2}.
+\end{equation}
+对方阵 $A$，谱半径定义为
+\begin{equation}
+ \rho(A)=\max_{\lambda\in\sigma(A)}|\lambda|.
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+诱导二范数满足：
+\begin{enumerate}
+  \item $0\leq\norm A_2<\infty$，且 $\norm A_2=0$ 当且仅当 $A=0$；
+  \item $\norm{aA}_2=|a|\norm A_2$；
+  \item $\norm{A+B}_2\leq\norm A_2+\norm B_2$；
+  \item $\norm{AB}_2\leq\norm A_2\norm B_2$；
+  \item $\norm A_2^2=\rho(A^*A)$。
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+对任意方阵，
+\begin{equation}
+ \rho(A)\leq\norm A_2.
+\end{equation}
+若 $A$ 正规，则
+\begin{equation}
+ \rho(A)=\norm A_2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+若 $Av=\lambda v$，则
+\begin{equation}
+ |\lambda|\norm v_2=\norm{Av}_2\leq\norm A_2\norm v_2.
+\end{equation}
+对正规矩阵写成 $A=UDU^*$，酉不变性给出
+\begin{equation}
+ \norm A_2=\norm D_2=\max_i|d_i|=\rho(A).
+\end{equation}
+\end{proof}
+
+\begin{remark}
+一般矩阵中不一定取等号。例如
+\begin{equation}
+ N=\begin{pmatrix}0&1\\0&0\end{pmatrix}
+\end{equation}
+满足 $\rho(N)=0$，但 $\norm N_2=1$。
+\end{remark}
+
+\subsection{矩阵指数与谱半径为零的判别}
+
+由次乘法性，级数
+\begin{equation}
+ \e^A=\sum_{k=0}^{\infty}\frac{A^k}{k!}
+\end{equation}
+绝对收敛，因为
+\begin{equation}
+ \sum_{k=0}^{\infty}\frac{\norm A_2^k}{k!}
+ \leq\e^{\norm A_2}.
+\end{equation}
+因此矩阵指数定义良好，并满足 $AB=BA$ 时
+\begin{equation}
+ \e^{A+B}=\e^A\e^B.
+\end{equation}
+
+\begin{theorem}
+对 $A\in\C^{n\times n}$，下列条件等价：
+\begin{enumerate}
+  \item $\rho(A)=0$；
+  \item $A$ 的全部特征值为 $0$；
+  \item $A$ 幂零；
+  \item 对每个 $k\geq1$，$\tr(A^k)=0$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+前三项由 Cayley--Hamilton 定理直接等价。若特征值全为零，则 $\tr(A^k)$ 是特征值 $k$ 次幂之和，故为零。
+
+反之，设互异非零特征值为 $\lambda_1,\ldots,\lambda_s$，其代数重数为 $m_1,\ldots,m_s$。由
+\begin{equation}
+ \sum_{j=1}^s m_j\lambda_j^k=0,
+ \qquad k=1,\ldots,s,
+\end{equation}
+除去一个 $\lambda_j$ 后得到 Vandermonde 型线性方程组。其系数矩阵可逆，迫使 $m_j\lambda_j=0$，矛盾。因此不存在非零特征值。
+\end{proof}
+
+\subsection{半正定矩阵的等价刻画}
+
+\begin{theorem}
+对实方阵 $A$，下列条件等价：
+\begin{enumerate}
+  \item 存在实矩阵 $B$ 使
+  \begin{equation}
+   A=B^TB;
+  \end{equation}
+  \item $A=A^T$ 且
+  \begin{equation}
+   x^TAx\geq0
+   \qquad\text{对所有 }x\in\R^n;
+  \end{equation}
+  \item 存在唯一的实对称半正定矩阵 $C$ 使
+  \begin{equation}
+   A=C^2.
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+若 $A=B^TB$，则 $A$ 对称且
+\begin{equation}
+ x^TAx=\norm{Bx}_2^2\geq0.
+\end{equation}
+若 $A$ 对称半正定，谱定理给出
+\begin{equation}
+ A=Q\diag(\lambda_1,\ldots,\lambda_n)Q^T,
+ \qquad \lambda_i\geq0.
+\end{equation}
+取
+\begin{equation}
+ C=Q\diag(\sqrt{\lambda_1},\ldots,\sqrt{\lambda_n})Q^T
+\end{equation}
+即可。半正定平方根的唯一性可在每个特征空间上验证。最后令 $B=C$ 即回到第一项。
+\end{proof}

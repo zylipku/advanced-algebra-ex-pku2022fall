@@ -1,0 +1,219 @@
+\section{习题课 \#3（9月27日）}
+
+\subsection{线性相关、线性无关与交换定理}
+
+\begin{remark}
+当 $n\geq2$ 时，$S_n$ 中奇排列与偶排列数目相同。一个简洁证明是
+\begin{equation}
+ \sum_{\sigma\in S_n}\sgn(\sigma)
+ =\det\begin{pmatrix}
+ 1&\cdots&1\\
+ \vdots&&\vdots\\
+ 1&\cdots&1
+ \end{pmatrix}=0.
+\end{equation}
+\end{remark}
+
+\begin{theorem}[方阵列向量线性无关的等价条件]
+设 $A=(\alpha_1,\ldots,\alpha_n)\in\F^{n\times n}$。下列条件等价：
+\begin{enumerate}
+  \item $\alpha_1,\ldots,\alpha_n$ 线性无关；
+  \item $\sum_{j=1}^n c_j\alpha_j=0$ 只有零解；
+  \item $\det A\neq0$；
+  \item 对任意 $b\in\F^n$，方程 $Ax=b$ 有唯一解；
+  \item $A$ 可逆。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+对于 $s\leq n$ 个向量 $\alpha_1,\ldots,\alpha_s\in\F^n$，线性无关仍等价于齐次关系只有零解，但不再能直接使用一个 $s\times s$ 行列式，除非选取适当的 $s$ 行形成非零子式。
+\end{remark}
+
+\begin{proposition}[用线性组合替换一个向量]
+设 $\alpha_1,\ldots,\alpha_s$ 线性无关，并令
+\begin{equation}
+ \beta=\sum_{i=1}^s k_i\alpha_i.
+\end{equation}
+若 $k_j\neq0$，则
+\begin{equation}
+ \alpha_1,\ldots,\alpha_{j-1},\beta,
+ \alpha_{j+1},\ldots,\alpha_s
+\end{equation}
+仍线性无关。
+\end{proposition}
+
+\begin{proof}
+若
+\begin{equation}
+ r\beta+\sum_{i\neq j}r_i\alpha_i=0,
+\end{equation}
+代入 $\beta$ 后，$\alpha_j$ 的系数为 $rk_j$。由原向量组线性无关且 $k_j\neq0$，先得 $r=0$，再得所有 $r_i=0$。
+\end{proof}
+
+\begin{theorem}[Steinitz 交换定理]
+设 $\alpha_1,\ldots,\alpha_s$ 张成向量空间 $V$，而 $\beta_1,\ldots,\beta_t$ 线性无关。则 $t\leq s$，并且可以从 $\alpha_1,\ldots,\alpha_s$ 中删去 $t$ 个向量，使
+\begin{equation}
+ \beta_1,\ldots,\beta_t
+\end{equation}
+与余下的 $s-t$ 个 $\alpha$ 向量仍张成 $V$。若原来的 $\alpha$ 向量组是一组基，则替换后仍是一组基。
+\end{theorem}
+
+\begin{proof}
+对 $t$ 归纳。因 $\beta_1\in\Span(\alpha_1,\ldots,\alpha_s)$，其表示中至少有一个系数非零。由上一命题可用 $\beta_1$ 替换相应的 $\alpha$ 而不改变张成空间。随后将 $\beta_2$ 写成新生成组的线性组合。若 $\beta_2$ 在 $\beta_1$ 之外的所有系数均为零，则 $\beta_1,\beta_2$ 相关，矛盾；故还可替换另一个 $\alpha$。如此继续即可。
+\end{proof}
+
+\begin{remark}
+有限向量组可按其张成空间比较：
+\begin{equation}
+ A\preccurlyeq B
+ \quad\Longleftrightarrow\quad
+ \Span A\subseteq\Span B.
+\end{equation}
+这是一个预序。将张成同一子空间的向量组视为等价后，所得偏序正是有限生成子空间按包含关系构成的偏序。
+\end{remark}
+
+\subsection{秩与线性关系的支撑}
+
+\begin{proposition}
+设 $\alpha_1,\ldots,\alpha_s\in\F^n$，并固定 $r\leq\min\{n,s\}$。下列条件等价：
+\begin{enumerate}
+  \item 任取其中 $r$ 个向量均线性无关；
+  \item 每个非平凡线性关系
+  \begin{equation}
+   \sum_{j=1}^s x_j\alpha_j=0
+  \end{equation}
+  至少含有 $r+1$ 个非零系数。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+若存在只含不超过 $r$ 个非零系数的非平凡关系，则把相应向量补足到 $r$ 个便得到相关组。反之，若某 $r$ 个向量相关，则其非平凡关系扩充为整个向量组上的关系，非零系数不超过 $r$。
+\end{proof}
+
+\begin{proposition}[严格对角占优判别]
+设 $A=(a_{ij})\in\F^{n\times n}$，并假设绝对值来自 $\R$ 或 $\C$。若
+\begin{equation}
+ |a_{ii}|>\sum_{j\neq i}|a_{ij}|,
+ \qquad i=1,\ldots,n,
+\end{equation}
+则 $A$ 可逆。
+\end{proposition}
+
+\begin{proof}
+若 $Ax=0$ 且 $x\neq0$，取 $k$ 使 $|x_k|=\max_j|x_j|>0$。第 $k$ 行给出
+\begin{equation}
+ |a_{kk}|\,|x_k|
+ \leq\sum_{j\neq k}|a_{kj}|\,|x_j|
+ \leq\left(\sum_{j\neq k}|a_{kj}|\right)|x_k|,
+\end{equation}
+与严格不等式矛盾。
+\end{proof}
+
+\subsection{若干行列式恒等式}
+
+\begin{exercise}[行和与列差]
+设 $A=(a_{ij})\in\F^{n\times n}$，并令
+\begin{equation}
+ s_i=\sum_{k=1}^n a_{ik},
+ \qquad
+ B=(s_i-a_{ij})_{i,j=1}^n.
+\end{equation}
+证明
+\begin{equation}
+ \det B=(-1)^n(1-n)\det A.
+\end{equation}
+\end{exercise}
+
+\begin{proof}
+记 $J=\ones\ones^T$。因为 $A\ones=(s_1,\ldots,s_n)^T$，故
+\begin{equation}
+ B=A(J-I_n).
+\end{equation}
+矩阵 $J-I_n$ 在 $\Span\{\ones\}$ 上的特征值为 $n-1$，在其余 $n-1$ 维子空间上的特征值为 $-1$。于是
+\begin{equation}
+ \det(J-I_n)=(n-1)(-1)^{n-1}=(-1)^n(1-n),
+\end{equation}
+结论随即成立。
+\end{proof}
+
+\begin{exercise}[列差行列式与余子式之和]
+设 $A=(a_{ij})\in\F^{n\times n}$，列向量为 $a_1,\ldots,a_n$。证明
+\begin{equation}
+ \det(a_1-a_2,a_2-a_3,\ldots,a_{n-1}-a_n,\ones)
+ =\sum_{i,j=1}^n C_{ij}(A).
+\end{equation}
+\end{exercise}
+
+\begin{proof}
+由矩阵行列式引理的多项式形式，
+\begin{equation}
+ \det(A+t\ones\ones^T)
+ =\det A+t\ones^T\adj(A)\ones
+ =\det A+t\sum_{i,j}C_{ij}(A).
+\end{equation}
+另一方面，对列作连续差分可把 $A+t\ones\ones^T$ 的一次项系数化为题设左端行列式，故二者相等。也可直接反复使用列的线性性展开。
+\end{proof}
+
+\begin{exercise}[正弦和矩阵的秩]
+计算
+\begin{equation}
+ D_n=\det\bigl(\sin(\alpha_k+\beta_\ell)\bigr)_{k,\ell=1}^n.
+\end{equation}
+\end{exercise}
+
+\begin{solution}
+由加法公式
+\begin{equation}
+ \sin(\alpha_k+\beta_\ell)
+ =\sin\alpha_k\cos\beta_\ell+
+   \cos\alpha_k\sin\beta_\ell,
+\end{equation}
+整个矩阵是两个秩一矩阵之和，故秩至多为 $2$。因此
+\begin{equation}
+ D_n=0,
+ \qquad n\geq3.
+\end{equation}
+低阶情形为
+\begin{equation}
+ D_1=\sin(\alpha_1+\beta_1),
+\end{equation}
+以及
+\begin{equation}
+ D_2
+ =\sin(\alpha_1-\alpha_2)
+  \sin(\beta_2-\beta_1).
+\end{equation}
+原稿也用复指数展开说明：每一列均落在由
+$(\e^{\ii\alpha_k})_k$ 与 $(\e^{-\ii\alpha_k})_k$ 张成的二维空间中。
+\end{solution}
+
+\begin{exercise}[$\mu$-循环行列式]
+设
+\begin{equation}
+ A=\begin{pmatrix}
+ c_0&c_1&\cdots&c_{n-1}\\
+ \mu c_{n-1}&c_0&\cdots&c_{n-2}\\
+ \vdots&\vdots&\ddots&\vdots\\
+ \mu c_1&\mu c_2&\cdots&c_0
+ \end{pmatrix},
+ \qquad
+ f(z)=\sum_{j=0}^{n-1}c_jz^j.
+\end{equation}
+计算 $\det A$。
+\end{exercise}
+
+\begin{solution}
+若 $\xi^n=\mu$，令
+\begin{equation}
+ v(\xi)=(1,\xi,\ldots,\xi^{n-1})^T.
+\end{equation}
+直接计算得
+\begin{equation}
+ Av(\xi)=f(\xi)v(\xi).
+\end{equation}
+当 $\mu\neq0$ 时，方程 $\xi^n=\mu$ 的 $n$ 个根两两不同，对应的 Vandermonde 特征向量构成一组基，因此
+\begin{equation}
+ \det A=\prod_{\xi^n=\mu}f(\xi).
+\end{equation}
+该恒等式两端都是 $\mu,c_0,\ldots,c_{n-1}$ 的多项式，故也可由连续性推广到退化情形。
+\end{solution}
